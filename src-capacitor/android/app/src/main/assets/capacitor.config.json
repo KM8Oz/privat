@@ -1,0 +1,7 @@
+{
+  "appId": "com.pcm.app",
+  "appName": "PCM Chat",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www"
+}

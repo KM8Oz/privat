@@ -1,0 +1,19 @@
+import Peer from "peerjs";
+
+const peer = ()=>(new Peer({
+    host:'back.cg.house',
+    port:'443',
+    path:'/peerjs',
+    debug:4,
+    config:{ 'iceServers': [ 
+         {url:'stun:back.cg.house:1739'},
+      {
+          url: 'turn:back.cg.house:3478',
+          credential: 'webrtc',
+          username: 'webrtc@pcm'
+      },
+    
+  ] }
+  }))
+  
+export default { peer };

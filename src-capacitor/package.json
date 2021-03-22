@@ -1,0 +1,12 @@
+{
+  "name": "pcm",
+  "version": "0.0.1",
+  "description": "A Quasar Framework app",
+  "private": true,
+  "dependencies": {
+    "@capacitor/android": "^2.4.3",
+    "@capacitor/cli": "^1.0.0",
+    "@capacitor/core": "^1.0.0"
+  },
+  "author": "@kmoz"
+}
