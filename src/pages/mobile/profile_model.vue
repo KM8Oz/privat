@@ -12,7 +12,7 @@
             <div class="row profilecard">
                 <div class="col-12 flex text-center row justify-center">
                     <div class="col-12">
-                        <q-img class="mobile-ui-profile-img w-100" :src="thisModel ? thisModel.avatars : ''">
+                        <q-img class="mobile-ui-profile-img w-100" :src="thisModel ? thisModel.avatars.replace('.camsguns.com','.cg.house') : ''">
     
                             <div class="absolute-top-right bg-none2">
                                 <q-fab text-color="white" class="maxc-w self-end " icon="more_horiz" direction="left" :ripple="false" active-icon="circle">
@@ -52,7 +52,7 @@
                         <swiper class="swiper h-vh-50 bg-black profile-swiper" :options="swiperOption" ref="profile_swiper" :auto-update="true" :auto-destroy="true" :delete-instance-on-destroy="true" :cleanup-styles-on-destroy="true">
                             <swiper-slide v-for="(item, index) in vidos" :key="item._id+index" class="h-100 bg-black">
                                 <vue-plyr class="mute-right h-100 rounded-borders">
-                                    <video :data-plyr-config='`{ "controls": ["play-large","play","mute"]}`' class="profilevideo player" :id="item._id" :poster="item._source.body.video.replace('.mp4','_mobile.png')" :src="item._source.body.video.replace('.mp4','_mobile.mp4')" color="black"
+                                    <video :data-plyr-config='`{ "controls": ["play-large","play","mute"]}`' class="profilevideo player" :id="item._id" :poster="item._source.body.video.replace('.mp4','_mobile.png').replace('.camsguns.com','.cg.house')" :src="item._source.body.video.replace('.mp4','_mobile.mp4').replace('.camsguns.com','.cg.house')" color="black"
                                         type="video/mp4" />
                                 </vue-plyr>
                                 <q-icon name="zoom_out_map" color="white" size="30px" @click="openfullvideo(item)" class="z-index-video " />
@@ -63,7 +63,7 @@
                     <swiper-slide>
                         <swiper class="swiper h-vh-50  bg-black profile-swiper" :options="swiperOption" ref="profile_swiper_img" v-if="imagesslider">
                             <swiper-slide v-for="(item, index) in imagesdata" :key="index" class="h-100 w-100 bg-black">
-                                <q-img :src="item.src" class="profilegalary"></q-img>
+                                <q-img :src="item.src.replace('.camsguns.com','.cg.house')" class="profilegalary"></q-img>
                                 <q-badge text-color="red" class="badge-galary" floating><span>фото</span></q-badge>
                             </swiper-slide>
                             <swiper-slide :key="'sdsdsd'" v-show="this.$route.params.modelid ? false : pcm.user.rol" class="h-100 bg-black">
@@ -79,7 +79,7 @@
                 <q-dialog v-model="fullvideo.open" position="bottom" transition-show="bounceIn">
                     <q-card class="profilefullvideo" v-if="fullvideo.video">
                         <vue-plyr class="bigbtnplyr profilevideo mute-right" :emit="['loadeddata']">
-                            <video @play="setProgressBar" controls="false" data-plyr-config='{ "controls": ["mute"]}' ref="dialogVideo" :src="fullvideo.video.video.replace('.mp4','_desktop.mp4')" color="black" type="video/mp4" />
+                            <video @play="setProgressBar" controls="false" data-plyr-config='{ "controls": ["mute"]}' ref="dialogVideo" :src="fullvideo.video.video.replace('.mp4','_desktop.mp4').replace('.camsguns.com','.cg.house')" color="black" type="video/mp4" />
                         </vue-plyr>
                         <q-linear-progress :value="fullvideo.progress" color="pink" />
     

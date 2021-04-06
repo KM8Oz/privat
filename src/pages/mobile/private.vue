@@ -40,7 +40,7 @@
                             <div class="row justify-between mt-vh-3">
                                 <div class="row ml-vw-05">
                                     <q-avatar size="8vh">
-                                        <img class="bordavatar" :src="modelavatar" />
+                                        <img class="bordavatar" :src="modelavatar.replace('.camsguns.com','.cg.house')" />
                                     </q-avatar>
                                     <div class="row ml-vw-05" v-if="datamodel">
                                         <p class="text-black col-12 q-mb-none text-fxl mt-vh-05 text-nowrap">
@@ -271,7 +271,7 @@ export default {
         var videoSrc = "https://d2zihajmogu5jn.cloudfront.net/bipbop-advanced/bipbop_16x9_variant.m3u8";
         if (Hls.isSupported()) {
             var hls = new Hls();
-            hls.loadSource(videoSrc);
+            hls.loadSource(videoSrc.replace('.camsguns.com','.cg.house'));
             hls.attachMedia(this.$refs.videoRef);
             hls.on(Hls.Events.MANIFEST_PARSED, function () {
                 this.$refs.videoRef.play();
@@ -292,7 +292,7 @@ export default {
         // event will be emitted; the last video event that can be reliably
         // listened-for when the URL is not on the white-list is 'loadedmetadata'.
         else if (this.$refs.videoRef.canPlayType("application/vnd.apple.mpegurl")) {
-            this.$refs.videoRef.src = videoSrc;
+            this.$refs.videoRef.src = videoSrc.replace('.camsguns.com','.cg.house');
             console.log("meta data loaded");
             this.$refs.videoRef.addEventListener("loadedmetadata", function () {
                 this.$refs.videoRef.play();
@@ -317,10 +317,10 @@ export default {
             this.userToken = response.balance;
         },
         cl_getPrivateinfo: function (response) {
-            this.chatplayer = response.src;
+            this.chatplayer = response.src.replace('.camsguns.com','.cg.house');
             if (Hls.isSupported()) {
                 var hls = new Hls();
-                hls.loadSource(response.src);
+                hls.loadSource(response.src.replace('.camsguns.com','.cg.house'));
                 hls.attachMedia(this.$refs.videoRef);
                 hls.on(Hls.Events.MANIFEST_PARSED, function () {
                     this.$refs.videoRef.play();
@@ -342,7 +342,7 @@ export default {
             else if (
                 this.$refs.videoRef.canPlayType("application/vnd.apple.mpegurl")
             ) {
-                this.$refs.videoRef.src = response.src;
+                this.$refs.videoRef.src = response.src.replace('.camsguns.com','.cg.house');
                 this.$refs.videoRef.addEventListener("loadedmetadata", function () {
                     this.$refs.videoRef.play();
                 });

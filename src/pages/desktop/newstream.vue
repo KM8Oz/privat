@@ -1,5 +1,5 @@
 <template>
-  <div :class="`${pcm.controls.dark ? 'bg-dark': 'bg-white'} row`">
+  <div :class="`${pcm.controls.dark ? 'bg-dark': 'bg-white'} row newlives_wrapper`">
     <div class="col-lg-2 col-md-3 mt-vh-4">
      <q-followings />
     </div>
@@ -15,7 +15,7 @@
         <q-card flat square :class="`${pcm.controls.dark?'bg-dark text-white':'text-black'}`">
           <q-card-section class="q-pb-none w-mxc q-pa-none row">
             <p class="col text-fxl  font-weight-bolder line-height-1">
-              Настройки стрима
+              {{$t('streaming.stream_settings')}}
             </p>
           </q-card-section>
         
@@ -24,18 +24,18 @@
           bg-color="white" outlined color="gery-5" 
           class="q-px-xs"
           rounded
-          placeholder="Описание стрима" 
+          :placeholder="$t('streaming.stream_description')" 
            maxlength="60"  />
           <q-input  v-model="tags" 
           class="mt-vh-2 q-px-xs" 
            input-class="q-mx-md text-body1 q-mb-xs text-weight-light" 
           bg-color="white" outlined color="gery-5" 
           rounded
-          placeholder="Тэги" 
+          :placeholder="$t('streaming.tags')" 
            maxlength="60"  />
           <q-card-section class="mt-vh-2 q-pb-none w-mxc q-pa-none row">
             <p class="col text-fxl  font-weight-bolder line-height-1">
-              Настройки доната
+             {{$t('streaming.dinations_settings')}}
             </p>
           </q-card-section>
         
@@ -44,7 +44,7 @@
           bg-color="white" outlined color="gery-5" 
           class="q-px-xs"
           rounded
-          placeholder="Цель сбора Токенов" 
+          :placeholder="$t('streaming.amount_donation')" 
            maxlength="70"  />
            <q-input  v-model.number="sum" 
            type="number" 
@@ -53,12 +53,12 @@
            input-class="q-mx-md text-body1  text-center q-mb-xs text-weight-bold" 
           bg-color="white" outlined color="gery-5" 
           rounded
-            placeholder="Сумма"  mask="xxx"
+            :placeholder="$t('streaming.minimal_donation')"  mask="xxx"
              />
        
           <q-card-section class="mt-vh-2 q-pb-none w-mxc q-pa-none row">
             <p class="col text-fxl  font-weight-bolder line-height-1">
-              Настройки привата
+              {{$t('streaming.private_settings')}}
             </p>
           </q-card-section>
             <q-input  v-model.number="sumPrivat" 
@@ -68,7 +68,7 @@
           class="q-px-xs"
           rounded
           :rules="[val => val > 0 || '(# > 0) !']"
-              placeholder="Стоимость минуты привата"  mask="xxx"
+              :placeholder="$t('streaming.price_of_minute')"  mask="xxx"
               />
 
           <q-item tag="label" v-ripple class="mt-vh-2 q-pl-none">
@@ -76,13 +76,13 @@
           <q-checkbox v-model="cMode" val="teal" color="pink-6" class="q-mx-xl" />
         </q-item-section>
         <q-item-section >
-          <q-item-label title="Разрешить подглядывания" class="white text-overline ">Разрешить подглядывания</q-item-label>
+          <q-item-label :title="$t('streaming.accept_terms')" class="white text-overline "> {{$t('streaming.accept_terms')}}</q-item-label>
         </q-item-section>
       </q-item>
 
           <q-card-section class="mt-vh-4 q-pb-none w-mxc q-pa-none row">
             <p class="col text-fxl  font-weight-bolder line-height-1">
-              Настройки бота
+             {{$t('streaming.bot_settings')}}
             </p>
           </q-card-section>
           <!-- //==-- bot configuration --==// -->
@@ -90,7 +90,7 @@
            input-class="q-mx-md text-body1 q-mb-xs text-weight-light" 
           bg-color="white" outlined color="gery-5" 
           rounded
-          placeholder="Текст сообщения бота" 
+          :placeholder="$t('streaming.bot_text')" 
            maxlength="60"  />
           <q-input  v-model.number="botTime" 
             type="number" 
@@ -99,12 +99,12 @@
            input-class="q-mx-md text-body1 text-center q-mb-xs text-weight-bold" 
               bg-color="white" outlined color="grey-5" 
               rounded
-              placeholder="Таймаут ./s"  mask="xxx"
+              :placeholder="$t('streaming.bot_timer')"  mask="xxx"
               />
         
           <q-card-section class="mt-vh-2   q-pb-none w-mxc q-pa-none row">
             <p class="col text-fxl  font-weight-bolder line-height-1 ">
-              Настройки Лаша
+              {{$t('streaming.settings_vibrator')}}
             </p>
           </q-card-section>
 <q-input  v-model.number="priceSecond" 
@@ -114,7 +114,7 @@
            input-class="q-mx-md text-body1 text-center q-mb-xs text-weight-bold" 
               bg-color="white" outlined color="grey-5" 
               rounded
-              placeholder="Стоимость секунды ./rub"  mask="xxx"
+              :placeholder="$t('streaming.price_of_second_vibra')"  mask="xxx"
               />
                     
           <div class="flex-center-div">
@@ -125,7 +125,7 @@
               class="w-30 h-15 text-subtitle1 mb-vh-4 mt-vh-2 q-px-xl b-border"
               color="pink-6"
               @click="cl_SendInfo()"
-              label="Сохранить"
+              :label="$t('streaming.save')"
             >
               <!-- @click="" -->
             </q-btn>
@@ -135,7 +135,10 @@
       </div>
     </div>
     <!-- Рекомендации -->
-  <q-listrec />
+    <div class="col-md-3">
+ <q-listrec />
+    </div>
+ 
   </div>
 </template>
 
@@ -299,3 +302,12 @@ export default {
   }
 };
 </script>
+<style lang="scss">
+  .newlives_wrapper{
+    display: flex;
+    flex-wrap: nowrap;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0px auto;
+  }
+</style>

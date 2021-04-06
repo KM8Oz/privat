@@ -81,10 +81,10 @@ export default {
              autoPlay: true,
              preload: "auto" ,
              doubleclickFullscreen: false,
-            posterImage: 'https://rec.camsguns.com/tutos/loading-1.jpg',
+            posterImage: 'https://rec.cg.house/tutos/loading-1.jpg',
             allowTheatre:           false,
             logo: {
-                imageUrl:           "https://rec.camsguns.com/tutos/logo-trans.png",
+                imageUrl:           "https://rec.cg.house/tutos/logo-trans.png",
                 position:           'top right',
                 clickUrl:           null,
                 opacity:            1

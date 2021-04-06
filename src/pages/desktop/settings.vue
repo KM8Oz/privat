@@ -1,6 +1,6 @@
 <template>
   <q-layout :class="pcm.controls.dark ? 'bg-dark profileminfix text-white': 'bg-white profileminfix text-black'">
-    <div class="row">
+    <div class="row settings-page-wrapper">
       <div class="col-lg-2 col-md-3 mt-vh-4">
       <q-followings />  
       </div>
@@ -22,7 +22,7 @@
               <q-img
                 v-if="ava == null"
                 class="q-pa-none"
-                :src="thisModel.avatars"
+                :src="thisModel.avatars.replace('.camsguns.com','.cg.house')"
               >
                 <q-file
                   @input="getImgBase64()"
@@ -54,7 +54,7 @@
                 <q-img
                   v-if="newava == null"
                   class="q-pa-none"
-                  :src="thisModel.avatars"
+                  :src="thisModel.avatars.replace('.camsguns.com','.cg.house')"
                 >
                 </q-img>
                 <q-img v-else class="q-pa-none" :src="newava"> </q-img>
@@ -76,7 +76,7 @@
             <!-- @click="" -->
           </div>
           <div class="mt-vh-2">
-            <p class="text-fxl text-weight-bold ">Имя</p>
+            <p class="text-fxl text-weight-bold ">{{$t('settings.name')}}</p>
             <!-- <p class="text-comment-14  text-graydg q-mb-none">
                         {{ thisModel.name }}
                     </p> -->
@@ -95,7 +95,7 @@
               </q-item-section>
               <q-item-section>
                 <q-item-label
-                  title="Разрешить подглядывания"
+                  :title="$t('settings.accept')"
                   class="text-body1 text-weight-regular gray-1337"
                 >
                   {{ thisModel.name }}</q-item-label
@@ -113,7 +113,7 @@
           </div>
 
           <div class="mt-vh-2">
-            <p class="text-fxl text-weight-bold ">Имя Пользователя</p>
+            <p class="text-fxl text-weight-bold ">{{$t('settings.username')}}</p>
             <q-item tag="label" v-ripple class="mt-vh-2 q-pl-none">
               <q-item-section avatar>
                 <q-btn
@@ -138,7 +138,7 @@
             </q-item>
           </div>
           <div class="mt-vh-2">
-            <p class="text-fxl text-weight-bold q-ma-none">Пароль</p>
+            <p class="text-fxl text-weight-bold q-ma-none">{{$t('settings.password')}}</p>
             <q-item tag="label" v-ripple class="mt-vh-2 q-pl-none">
               <q-item-section avatar>
                 <q-btn
@@ -163,7 +163,7 @@
             </q-item>
           </div>
           <div class="mt-vh-2">
-            <p class="text-fxl text-weight-bold q-ma-none">Почта</p>
+            <p class="text-fxl text-weight-bold q-ma-none">{{$t('settings.email')}}</p>
             <q-item tag="label" v-ripple class="mt-vh-2 q-pl-none">
               <q-item-section avatar>
                 <q-btn
@@ -199,7 +199,7 @@
               <p
                 class="mr-vw-1 ml-vw-1 text-white text-comment-14 q-ma-none text-initial"
               >
-                Stream key
+                {{$t('settings.stream_key')}}:
               </p>
             </q-btn>
             <q-card
@@ -210,7 +210,7 @@
             >
               <q-card-section
                 class="text-comment-16 flex-center-between"
-                >Описания для OBS:
+                >{{$t('settings.obs')}}:
               </q-card-section>
               <q-separator />
               <q-card-section>
@@ -271,14 +271,17 @@
             <p
               class="mr-vw-1 ml-vw-1 text-white text-comment-14 q-ma-none text-initial"
             >
-              Стать моделью
+              {{$t('become_model.title')}}
             </p>
           </q-btn>
         </q-scroll-area>
       </div>
 
       <!--Рекомендации-->
+      <div class="col-3">
       <q-listrec />
+      </div>
+
     </div>
 
     <q-dialog
@@ -890,5 +893,10 @@ export default {
 
 .h100 {
   height: 90%;
+}
+.settings-page-wrapper{
+  width: 100%;
+  max-width: 1400px;
+  margin: 0px auto;
 }
 </style>

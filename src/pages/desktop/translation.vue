@@ -16,7 +16,7 @@
                         <div class="col justify-center items-center ">
                             <div class="row fit">
                                 <q-avatar>
-                                    <img  :src="modeldata ? modeldata.avatar : null" />
+                                    <img  :src="modeldata ? modeldata.avatar.replace('.camsguns.com','.cg.house') : null" />
                                      
                                 </q-avatar>
                                 <div class="col model_username" v-if="modeldata">
@@ -38,16 +38,19 @@
                         <q-btn label="закрыть приват" v-if="closePrivate2show" glossy color="red" @click="closePrivate2" class="close_private_stream"/>
                          <q-tabs :class="pcm.controls.dark ? 'tabschat bg-dark text-white' : 'tabschat' " v-model="tabpanel" dense  active-color="pink-6" indicator-color="pink-6" align="justify" narrow-indicator>
                             <q-tab name="chat">
-                                <p class="q-ma-none text-comment-18">Чат</p>
+                                <p class="q-ma-none text-comment-18">{{$t("lives.chat")}}</p>
                             </q-tab>
                             <q-tab name="persons">
-                                <p class="q-ma-none text-comment-18">Пользователи</p>
+                                <p class="q-ma-none text-comment-18">{{$t("lives.users")}}</p>
                             </q-tab>
                             <!-- <q-tab name="donat">
                     <p class="q-ma-none text-comment-18">Донат</p>
                   </q-tab> -->
                             <q-tab name="settings">
-                                <p class="q-ma-none text-comment-18">Настройки</p>
+                                <p class="q-ma-none text-comment-18">{{$t("lives.settings")}}</p>
+                            </q-tab>
+                            <q-tab name="bots">
+                                <p class="q-ma-none text-comment-18">{{$t("lives.bots")}}</p>
                             </q-tab>
                         </q-tabs>
                     </q-card-section>
@@ -55,7 +58,7 @@
             </div>           
             
              <q-tab-panels v-model="tabpanel" animated>
-                                <q-tab-panel name="persons" :class="pcm.controls.dark ?'q-pa-none h-vh-75 bg-dark':'q-pa-none h-vh-75 '">
+                                <q-tab-panel name="persons" :class="pcm.controls.dark ?'q-pa-none q-pt-md h-vh-75 bg-dark':'q-pa-none q-pt-md h-vh-75 '">
                                     <q-scroll-area  class="row q-px-xs vh-55" :thumb-style="thumbStyle" :bar-style="barStyle">
                                        <q-list bordered separator>
       <q-item clickable v-ripple v-for="(viewer,index) in viewers"  :key="index" v-show="viewer.username != pcm.user.un">
@@ -70,7 +73,7 @@
                                     </q-scroll-area>
                                 </q-tab-panel>
                 <q-tab-panel name="chat" :class="pcm.controls.dark ?'q-pa-none h-vh-75 bg-dark':'q-pa-none h-vh-75 '">
-                    <q-scroll-area ref="chatscroll" v-if="datachat.length > 0" class="row q-px-md vh-55" :thumb-style="thumbStyle" :bar-style="barStyle">
+                    <q-scroll-area ref="chatscroll" v-if="datachat.length > 0" class="row q-px-md q-pt-md vh-55" :thumb-style="thumbStyle" :bar-style="barStyle">
                         <!-- <div style="width: 95%;" class="text-white" v-for="(item, index) in datachat" :key="index">
                         <div class="q-ma-none row flexchat" v-if="item.ismodel == true">
                             <b class="text-pink-6 text-comment-18">{{ item.name }}:</b>
@@ -85,7 +88,9 @@
                             </p>
                         </div>
                     </div> -->
-                        <q-chat-message :class="`row  ${item.id !== pcm.user.id ? 'justify-start':''}`" :sent="item.id !== pcm.user.id" :label-sanitize="true" v-for="(item, index) in datachat" :key="index" :bg-color="item.ismodel ? 'pink-6' : 'amber-7'" :name="item.name" :avatar="item.avatar" :text="[item.text]" :stamp="
+                        <q-chat-message :class="`row  ${item.id !== pcm.user.id ? 'justify-start':''}`" :sent="item.id !== pcm.user.id"
+                         :label-sanitize="true" v-for="(item, index) in datachat" :key="index" :bg-color="item.ismodel ? 'pink-6' : 'amber-7'"
+                          :name="item.name" :avatar="item.avatar.replace('camsguns.com','cg.house')" :text="[item.text]" :stamp="
                   getdatediff(item.date).month !== 0
                     ? `${getdatediff(item.date).month} months ago`
                     : getdatediff(item.date).day !== 0
@@ -102,7 +107,8 @@
                     </q-btn>
                 </div> -->
                     <div :class="!$route.query.box ? 'row fixed-bottom-right  w-vw-chat2': 'row fixed-bottom-right  w-vw-chat3' ">
-                        <q-input v-on:keyup.enter="send_comment()" v-model="chat_send" placeholder="Ваше сообщение" borderless :color="pcm.controls.dark ? 'dark' : 'white'" :input-class="`text-body1 backy-cmt ${
+                        <q-input v-on:keyup.enter="send_comment()" v-model="chat_send"
+                         :placeholder="$t('streaming.your_message')" borderless :color="pcm.controls.dark ? 'dark' : 'white'" :input-class="`text-body1 backy-cmt ${
                   pcm.controls.dark ? 'text-white' : 'text-dark'
                 }  q-my-md q-pl-md q-ml-none`" class="col-10 backy-cmt2 q-my-xs q-ml-xs">
                             <!-- <template v-slot:prepend>
@@ -148,40 +154,45 @@
                 <q-scroll-area ref="commentsscroll" class="comdial ml-vw-1 q-pa-none settings_scroller mr-vw-1 flex" :thumb-style="thumbStyle" :bar-style="barStyle">
                     <q-card-section class="q-mt-md w-mxc q-pa-none row">
                         <p class="col text-fxl font-weight-bolder line-height-1">
-                            Настройки доната
+                            {{$t('streaming.stream_settings')}}
                         </p>
                     </q-card-section>
                     <q-input autogrow maxlength="70" 
                      rounded outlined v-model="target" bg-color="white"  input-class="text-body1 q-mx-md q-mb-xs" 
-                     placeholder="Цель сбора Токенов" dense />
-                    <q-input class="mt-vh-1 w-50" bg-color="white" type="number"  input-class="text-body1 q-mx-md q-mb-xs text-weight-bold text-center" rounded outlined v-model.number="sum" placeholder="Сумма" dense />
+                     :placeholder="$t('streaming.amount_donation')" dense />
+                    <q-input class="mt-vh-1 w-50" bg-color="white" type="number"  input-class="text-body1 q-mx-md q-mb-xs text-weight-bold text-center" rounded outlined v-model.number="sum" 
+                    :placeholder="$t('streaming.minimal_donation')"  dense />
 
                     <q-card-section class="mt-vh-2 q-pb-none w-mxc q-pa-none row">
                         <p class="col text-fxl  font-weight-bolder line-height-1">
-                            Настройки привата
+                             {{$t('streaming.private_settings')}}
                         </p>
                     </q-card-section>
-                    <q-input bg-color="white" class="w-50"  input-class="text-body1 q-mx-md q-mb-xs text-weight-bold text-center" rounded v-model.number="sumPrivat" type="number"  placeholder="Стоимость минуты привата" outlined dense />
+                    <q-input bg-color="white" class="w-50"  input-class="text-body1 q-mx-md q-mb-xs text-weight-bold text-center" rounded v-model.number="sumPrivat" type="number" 
+                     :placeholder="$t('streaming.price_of_minute')" outlined dense />
                     <q-checkbox v-model="cMode" color="pink" class="mt-vh-2 text-overline flex-center" dark dense size="40px">
                         <p class=" q-ma-none">
-                            Разрешить подглядывания
+                           {{$t('streaming.accept_terms')}}
                         </p>
                     </q-checkbox>
 
                     <q-card-section class="mt-vh-2 q-pb-none w-mxc q-pa-none row">
                         <p class="col text-fxl  font-weight-bolder line-height-1">
-                            Настройки бота
+                            {{$t('streaming.bot_settings')}}
                         </p>
                     </q-card-section>
-                    <q-input class="mt-vh-1" bg-color="white"  input-class="text-body1 q-mx-md q-mb-xs" rounded  autogrow outlined v-model="botDesk" placeholder="Текст сообщения бота" dense />
-                    <q-input class="mt-vh-1  w-50" bg-color="white"  input-class="text-body1 text-weight-bold text-center q-mx-md q-mb-xs" rounded  v-model.number="botTime" type="number" placeholder="Таймаут" outlined dense />
+                    <q-input class="mt-vh-1" bg-color="white"  input-class="text-body1 q-mx-md q-mb-xs" rounded  autogrow outlined v-model="botDesk"
+                    :placeholder="$t('streaming.bot_text')" dense />
+                    <q-input class="mt-vh-1  w-50" bg-color="white"  input-class="text-body1 text-weight-bold text-center q-mx-md q-mb-xs" rounded  v-model.number="botTime" type="number"
+                      :placeholder="$t('streaming.bot_timer')" outlined dense />
 
                     <q-card-section class="mt-vh-2 q-pb-none w-mxc q-pa-none row">
                         <p class="col text-fxl  font-weight-bolder line-height-1">
-                            Настройки Лаша
+                        {{$t('streaming.settings_vibrator')}}
                         </p>
                     </q-card-section>
-                    <q-input class="mt-vh-1  w-50" bg-color="white"  input-class="text-body1 text-center text-weight-bold q-mx-md q-mb-xs" rounded  v-model.number="priceSecond" type="number" placeholder="Стоимость секунды" outlined dense />
+                    <q-input class="mt-vh-1  w-50" bg-color="white"  input-class="text-body1 text-center text-weight-bold q-mx-md q-mb-xs" rounded  v-model.number="priceSecond" type="number"
+                     :placeholder="$t('streaming.price_of_second_vibra')" outlined dense />
              
                <div class="w-100 flex flex-center">
                             <q-btn
@@ -196,6 +207,21 @@
                </div>
                 </q-scroll-area>
             </q-tab-panel>
+             <q-tab-panel name="bots"  :class="pcm.controls.dark ?'q-pa-none settings_scroller text-white bg-dark':'q-pa-none settings_scroller text-dark'">
+                 <q-scroll-area  ref="commentsscroll" class="comdial ml-vw-1 q-pa-none settings_scroller mr-vw-1 flex" :thumb-style="thumbStyle" :bar-style="barStyle">
+                     <q-list bordered>
+      <q-item class="bot_tool"   v-ripple v-for="(tool, index) in bots_tab.data" :key="index">
+        <q-item-section>{{tool.bot}}</q-item-section>
+        <q-item-section avatar >
+          <q-icon :color="activated.status ? activated.payload.id == tool.id ? 'green': 'red' :'red'" class="cursor-pointer" name="play_circle_filled" @click="startthis(tool)" />
+          <q-icon color="green" class="cursor-pointer" :name="tool.icons.edit" @click="$router.push('/createbot')" />
+           <q-icon color="red" class="cursor-pointer" :name="tool.icons.delete" @click="destroy(tool.id)" />
+        </q-item-section>
+      </q-item>
+      </q-list>
+                 </q-scroll-area>
+                 
+             </q-tab-panel>
         </q-tab-panels>
     </div>
 
@@ -276,15 +302,26 @@ export default {
             priceSecond: 1000,
             chat_send: null,
             fabLeft: null,
+            loop:null,
             private2:{
                 start_time:null
             },
+            bots_tab:{
+                   name: "bots list", icon: "list", 
+                   data:[]
+                   },
             vibroenable: false,
             datachat: [],
+            filter:null,
+            activated:{
+                status:false,
+                payload:null
+            },
             closePrivate2show:false,
             connection: null,
             viewers:null,
             sockestsIte:null,
+            timelooper:false,
             mediaRecorder: null,
             streamStarted: false,
             LogInSessionst:false,
@@ -339,6 +376,9 @@ export default {
         }
     },
     beforeDestroy() {
+        clearInterval(this.loop)
+        this.activated.status =  false;
+        this.activated.payload = null;
         clearInterval(this.sockestsIte)
         this.stop();
         if (
@@ -360,6 +400,16 @@ export default {
         }
     },
     sockets: {
+        bots_controller:function(res){
+        if(res.status){
+          vm.bots_tab.data = res.payload.map(e=>e={ id:e.id,lastedit:e.updatedAt, bot:e.name,icons: { edit: "edit", delete:"remove_circle_outline" }, data:e });
+              } else {
+               vm.$q.notify({
+                type:"worning",
+                message:"error listing bots"
+            })
+          }
+        },
         cl_privateRoute(response) {
             //   console.log("response from private stream:",response);
             if (response.status == "ready") {
@@ -400,8 +450,9 @@ export default {
                 id: response.id,
             };
             this.datachat.push(jsonobj);
+            let scroller =this.$refs.chatscroll;
             setTimeout(() => {
-                this.$refs.chatscroll.setScrollPosition(this.$refs.chatscroll.scrollSize);
+               if(scroller) { scroller.setScrollPosition(this.$refs.chatscroll.scrollSize);}
             }, 500);
         },
 
@@ -502,6 +553,7 @@ export default {
     },
     mounted() {
         // console.log(this.$route.query.box)
+        this.findAllBots();
     this.sockestsIte = setInterval(()=>{
  this.findAllSockets()
     }, 2000)
@@ -582,7 +634,149 @@ export default {
         }
 
     },
+    watch:{
+           chat_send:function(val){
+         if(this.filter){
+             this.triggerFilter(val)
+       }
+       },
+ timelooper:function(val){
+           console.log("looper:"+val);
+            if (val){
+              this.lopper()
+            } else {
+              clearInterval(this.loop)
+            }
+         },
+          activated:{
+
+           handler:function(val){
+             console.log(val);
+               this.timelooper = false;
+           if(val.status){ switch (val.payload.data.bot_type) {
+             case "triggered with text":
+                this.filter = true;
+                this.timelooper = false;
+               break;
+             case "timing with text":
+                  this.filter = false;
+                  this.timelooper = true;
+               break;
+                 case "triggered with button":
+                 this.filter = true;
+                 this.timelooper = false;
+               break;
+                 case "timing with button":
+                 this.filter = false;
+                 this.timelooper = true;
+               break;
+             default:
+                console.log("error switch");
+               break;
+             }
+           }
+           }
+           ,
+           deep:true
+         },
+    },
     methods: {
+          triggerFilter:function(val){
+              if(this.activated.status){
+            if(this.activated.payload.data.data.trigger.indexOf(val) !== -1){
+                  this.launchAction()
+               }
+              }
+            },
+            launchAction:function(){
+                    if(this.activated.status){
+                      let msg = {
+                        textmess : this.activated.payload.data.data.result_txt,
+                      date: new Date().toJSON(),
+                      username: "bot:"+this.activated.payload.bot,
+                      modelid: this.pcm.user.id,
+                      avatar:"https://rec.cg.house/statics/Mini-Robot.png",
+                      };
+                    setTimeout(()=>{
+                       /// send it ..bundleRenderer.renderToStream
+                        this.$socket.emit(
+                "s_streamchatsend",msg,
+                (err) => console.log("message sended:", err)
+            );
+                    },2000)
+                    }
+            },
+         lopper:function(){
+          console.log("ok",this.activated.payload.data.data.timing * 60 * 1000);
+            if(this.activated.status){
+              this.loop = setInterval(()=>{
+                 let msg = {
+                        textmess : this.activated.payload.data.data.result_txt,
+                      date: new Date().toJSON(),
+                      username: "bot:"+this.activated.payload.bot,
+                      modelid: this.pcm.user.id,
+                      avatar:"https://rec.cg.house/statics/Mini-Robot.png",
+                      };
+                 
+                         this.$socket.emit(
+                "s_streamchatsend",msg,
+                (err) => console.log("message sended:", err)
+            );
+              }, Number( this.activated.payload.data.data.timing * 60 * 1000))
+            }
+        },
+          destroy(id){
+        let vm = this;
+     this.$socket.emit("bots_controller", {
+       tk:vm.pcm.user.tk,
+       action:"delete",
+       payload:{
+         id:id
+       }
+     }, function(res){
+      // console.log(res);
+          vm.findAllBots()
+           if(res.status){
+             vm.tab = "add";
+           }
+     })
+    },
+         startthis:function(val){
+          if(this.activated.status){
+             if(this.activated.payload.id == val.id){
+              this.activated.status = false;
+              this.activated.payload = null; 
+             } else {
+                 this.activated.status = false;
+                  clearInterval(this.loop)
+              this.activated.payload = null; 
+              this.$nextTick(()=>{
+                      this.activated.status = true;
+              this.activated.payload = val; 
+              })
+             }
+          } else {
+           this.activated.status = true;
+          this.activated.payload = val; 
+          }
+        },
+         findAllBots(){
+          let vm = this;
+      this.$socket.emit("bots_controller", {
+        tk:this.pcm.user.tk,
+        payload:{},
+        action:"none"
+      }, function(res){
+          if(res.status){
+     vm.bots_tab.data = res.payload.map(e=>e={ id:e.id,lastedit:e.updatedAt, bot:e.name,icons: { edit: "edit", delete:"remove_circle_outline" }, data:e });
+          } else {
+            vm.$q.notify({
+              type:"worning",
+              message:"error listing bots"
+            })
+          }
+      })
+       },
           closePrivate2(){
      if(this.pcm.auth){
       //  this.$socket.unsubscribe("cl_newMassage_private");
@@ -683,7 +877,7 @@ export default {
                 modelid: this.pcm.user.id,
                 userid: this.userprivateid
             });
-            this.showprivate = false;
+            this.showprivate2 = false;
         },
         // checked(e){
         // console.log('checked  ',e)
@@ -808,7 +1002,7 @@ export default {
             }
         },
         //  start(){
-        //    this.connection = new WebSocket("wss://record.camsguns.com/streams?token=" + this.pcm.user.tk +"");
+        //    this.connection = new WebSocket("wss://record.cg.house/streams?token=" + this.pcm.user.tk +"");
         //    this.mediaRecorder.addEventListener('dataavailable',videoDataHandler)
         //    this.streamStarted = true;
         //  },
@@ -883,7 +1077,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 .mbb50 {
     width: 100%;
     margin-bottom: 10vh;
@@ -895,4 +1089,26 @@ export default {
 .purp {
     color: #fe2c55;
 }
+.q-list{
+                  border:unset;
+                  width: 100%;
+                  margin: unset;
+                  max-width: 31vw;
+                    .q-item{
+            //    border-radius:20px;
+               border:2px solid black;
+               padding: 0px 15px;
+               margin: 5px 5px;
+               color: black;
+               font-family: "Oswald-regular";
+               font-size: 1.1em;
+               .q-item__section--main ~ .q-item__section--side{
+       width: 100px !important;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+               }
+           }
+              }
 </style>

@@ -232,6 +232,9 @@ import Vue from 'vue'
 import createApp from './app.js'
 
 
+import 'app/src-pwa/register-service-worker.js'
+
+
 
 
 import qboot_BootaddressBar from 'boot/addressBar'
@@ -241,6 +244,8 @@ import qboot_Boottouchs from 'boot/touchs'
 import qboot_Bootprototype from 'boot/prototype'
 
 import qboot_Bootplyr from 'boot/plyr'
+
+import qboot_Booti18n from 'boot/i18n'
 
 import qboot_Bootwebsocketclient from 'boot/websocket-client'
 
@@ -268,6 +273,11 @@ import qboot_Bootuploader from 'boot/uploader'
 
 
 
+// Needed only for iOS PWAs
+if (/iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream && window.navigator.standalone) {
+  import(/* webpackChunkName: "fastclick"  */ '@quasar/fastclick')
+}
+
 
 const publicPath = `/`
 
@@ -289,7 +299,7 @@ async function start () {
   }
 
   const urlPath = window.location.href.replace(window.location.origin, '')
-  const bootFiles = [qboot_BootaddressBar,qboot_Boottouchs,qboot_Bootprototype,qboot_Bootplyr,qboot_Bootwebsocketclient,qboot_Bootplayer,qboot_Bootnotification,qboot_Bootclipboard,qboot_Bootuploaderv2,qboot_Bootcropper,qboot_Bootcomponents,qboot_Bootuploader]
+  const bootFiles = [qboot_BootaddressBar,qboot_Boottouchs,qboot_Bootprototype,qboot_Bootplyr,qboot_Booti18n,qboot_Bootwebsocketclient,qboot_Bootplayer,qboot_Bootnotification,qboot_Bootclipboard,qboot_Bootuploaderv2,qboot_Bootcropper,qboot_Bootcomponents,qboot_Bootuploader]
 
   for (let i = 0; hasRedirected === false && i < bootFiles.length; i++) {
     if (typeof bootFiles[i] !== 'function') {

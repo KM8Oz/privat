@@ -14,7 +14,7 @@
       ></video> -->
       <!-- <video-player ref="streamplayer" :options="videoOptions" :configs="{ hls: true }"></video-player> -->
 
-      <q-hls :src="src" :wps="100" :hps="100" :c="false"  class="h-vh-100 " classes="video-fit" />
+      <q-hls :src="src" :wps="100" ref="playerhls" :hps="100" :c="false"  class="h-vh-100 " classes="video-fit" />
     </div>
 
     <div class="row w-vw-100 h-vh-100 fixed-center">
@@ -273,16 +273,23 @@ export default {
       },
           src:
             this._G.recUrl +
-            "/stream/mobileHD/model" +
+            "/mobileHD/model" +
             this.$route.params.modelid +
             "/index.m3u8",
     };
   },
   // components: { EasyPlayer },
   computed:{
-   ...mapState(['pcm'])
+   ...mapState(['pcm']),
+   playerhls:function (){
+     return this.$refs.playerhls
+   }
   },
   created: function () {
+    this.src =  this._G.recUrl +
+            "/mobileHD/model" +
+            this.$route.params.modelid +
+              "/index.m3u8"+`?id=${this.pcm.user.id}&token=abcsf123nk21d`;
     this.$nextTick(function () {
       this.videol = this.$route.params.modelid;
       this.$socket.emit("s_changePage", {
@@ -385,9 +392,9 @@ export default {
       });
 
     this.src = this._G.recUrl +
-          "/stream/mobileHD/model" +
+          "/mobileHD/model" +
           this.$route.params.modelid +
-          "/index.m3u8";
+          "/index.m3u8"+`?id=${this.pcm.user.id}&token=abcsf123nk21d`;
     });
   },
   sockets: {
@@ -459,11 +466,23 @@ export default {
       this.peoplesIn = res.number > 0 ? res.number - 1 : res.number;
     },
   },
+  beforeMount:function(){
+      if(!this.pcm.auth) {  this.$q.notify({
+        type:"warning",
+        message:"signin first please!"
+      }); setTimeout(()=>{
+        this.$root.$emit("changepage", 1);
+      }, 1000) }
+  },
   beforeDestroy() {
     this.link = null;
     window.clearInterval(this.interval);
   },
-
+  mounted:function(){
+   this.playerhls.addEventListener("click", ()=>{
+     this.switchSrc()
+   })
+  },
   methods: {
     onright:function(){
      this.$router.back()
@@ -498,10 +517,10 @@ export default {
       this.$socket.emit(
         "s_streamchatsend",
         {
-          username: LocalStorage.getItem("username"),
+          username: this.pcm.user.un,
           modelid: this.$route.params.modelid,
           textmess: this.chat_send,
-          avatar: "https://cdn.quasar.dev/img/boy-avatar.png",
+          avatar: this.pcm.user.avatar ? this.pcm.user.avatar :  "https://cdn.quasar.dev/img/boy-avatar.png",
         },
         (err) => console.log("message sended:", err)
       );
@@ -540,13 +559,13 @@ export default {
       this.videoHD = !this.videoHD;
       this.src = this.videoHD
         ? this._G.recUrl +
-          "/stream/mobileHD/model" +
+          "/mobileHD/model" +
           this.$route.params.modelid +
-          "/index.m3u8"
+           "/index.m3u8"+`?id=${this.pcm.user.id}&token=abcsf123nk21d`
         :  this._G.recUrl +
-          "/stream/mobileSD/model" +
+          "/mobileSD/model" +
           this.$route.params.modelid +
-          "/index.m3u8";
+         "/index.m3u8"+`?id=${this.pcm.user.id}&token=abcsf123nk21d`;
     },
     play() {
       this.$refs.videoRef.play();

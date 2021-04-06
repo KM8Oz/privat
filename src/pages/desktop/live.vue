@@ -29,7 +29,7 @@
           </div>
         </div>
         <div class="fullpage">
-        <q-hls :src="src" :wps="100" :hps="100" :c="true"  />
+        <q-hls :src="src.replace('camsguns.com','cg.house')" :wps="100" :hps="100" :c="true"  />
           <!-- <q-icon
             name="hd"
             size="34px"
@@ -76,7 +76,7 @@
                 <div class="row justify-between items-center mt-vh-3">
                   <div class="row ml-vw-05">
                     <q-avatar size="5.16vh">
-                      <img class="bordavatar" :src="modelavatar" />
+                      <img class="bordavatar" :src="modelavatar.replace('camsguns.com','cg.house')" />
                     </q-avatar>
                     <div class="row ml-vw-05" v-if="datamodel">
                       <p class="col-12 q-mb-none text-subtitle1 mt-vh-05 text-nowrap">
@@ -196,7 +196,7 @@
             :key="index"
             :bg-color="item.ismodel ? 'pink-6' : 'amber-7'"
             :name="item.name"
-            :avatar="item.avatar"
+            :avatar="item.avatar.replace('camsguns.com','cg.house')"
             :text="[item.text]"
             :stamp="
               getdatediff(item.date).month !== 0
@@ -392,7 +392,7 @@
           <q-btn
             class="text-weight-bold bg-grey text-white col-4 q-ml-sm q-mt-xs"
             style="border-radius: 30px"
-            @click="privateStart = false"
+            @click="privateStart2 = false"
             >Нет</q-btn
           >
         </div>
@@ -539,6 +539,7 @@ export default {
         this.showTransaction = true
         this.transaction.total = res.payload.total;
         this.send_message(`${this.pcm.user.un} is no longer in private`)
+        this.is_private_chat = false 
       } else [
         this.$q.notify({
           type: "negative",

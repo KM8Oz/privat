@@ -9,7 +9,7 @@
       <q-item-section
         @click="changeTab('recs')"
         :class="`${tabs === 'recs' ? 'text-pink-6 oswald-semibold' : ''} text-fxl ml-vw-1 oswald-semibold`"
-        >Рекомендуемые</q-item-section
+        >{{$t("sides.recommandations")}}</q-item-section
       >
     </q-item>
     <q-item clickable v-ripple class="q-pa-none h-vh-6-st">
@@ -19,7 +19,7 @@
       <q-item-section
         @click="changeTab('home')"
         :class="`${tabs === 'home' ? 'text-pink-6 oswald-semibold' : ''} ml-vw-1 text-fxl oswald-semibold`"
-        >Подписки</q-item-section
+        >{{$t("sides.subscribers")}}</q-item-section
       >
     </q-item>
 
@@ -49,7 +49,7 @@
           >
             <div class="row items-center q-mb-none ml-vw-1">
               <q-avatar size="5vh">
-                <img class="bordavatar" :src="subs.avatars" />
+                <img class="bordavatar" :src="subs.avatars.replace('.camsguns.com','.cg.house')" />
               </q-avatar>
               <div class="q-mt-md q-ml-sm">
                 <p class="text-xl col-10 text-weight-medium q-mb-none oswald-regular">
@@ -67,7 +67,7 @@
      
           flat
           color="pink-6"
-          label="больше видео"
+          :label="$t('menu.more_videos')"
           @click="more"
           class="col-12 self-end"
         />

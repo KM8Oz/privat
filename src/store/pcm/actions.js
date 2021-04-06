@@ -17,6 +17,9 @@ export default {
     updateSlides(context, res) {
         context.commit('updateSlides', {status:res.status})
     },
+    updateBots(context, res){
+        context.commit("updateBots", res)
+    },
     categoSlides(context, res) {
         context.commit('categoSlides', {tags:res})
     },
@@ -35,4 +38,10 @@ export default {
         moreVideos: function(context, res){
             context.commit('moreVideos', res)
         },
+        useravatar: function(context, res){
+          context.commit('useravatar', res)
+        },
+        switch_language:function(context, res){
+         context.commit("switch_language", res)
+        }
 }

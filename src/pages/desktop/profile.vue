@@ -68,17 +68,21 @@
                   'mb-1',
                 ]"
               >
-                <div class="rounded-borders flex">
-                  <vue-plyr class="mute-right">
+                <div>
+                  <!-- <vue-plyr class="mute-right">
                     <video
                       data-plyr-config='{ "controls": ["play-large","play","settings","mute"], "settings": ["quality"]}'
                       class="videoprofile-inter"
                       :id="item._id"
-                      :src="item._source.body.video.replace('.mp4','_mobile.mp4')"
+                      :src="item._source.body.video.replace('.camsguns.com','.cg.house').replace('.mp4','_mobile.mp4')"
                       color="black"
                       type="video/mp4"
                     />
-                  </vue-plyr>
+                  </vue-plyr> -->
+                   <q-cart :src="item._source.body.video" :disable="true" :modelname="item._source.body.modelname" :modelid="item._source.body.modelid" :tags="item._source.body.tags" :data-image="item._source.body.video.replace('.camsguns.com','.cg.house').replace('.mp4','_mobile.png')">
+    <h1 slot="header">{{item._source.body.modelname}}</h1>
+    <p slot="content">{{item._source.body.title+": "+item._source.body.example+"/ "+ item._source.body.tags.join(',')}}</p>
+  </q-cart>
                 </div>
               </div>
             </div>
@@ -92,7 +96,7 @@
               <q-avatar size="10vh" class="self-center setting-border-avatar">
                 <img
                 
-                  :src="thisModel.avatars"
+                  :src="thisModel.avatars.replace('.camsguns.com','.cg.house')"
                 />
               </q-avatar>
               <div class="col self-center">
@@ -122,17 +126,17 @@
             </div>
              <div :class="pcm.controls.dark ? 'infomain col-12 bg-dark text-white row items-center q-mt-md q-mb-xs' :'infomain col-12 bg-white text-black q-mt-md row items-center q-mb-xs'">
               <div
-                class="col-8 row q-mt-md q-ml-md items-center q-mb-md "
+                class="col-8 row q-mt-md q-ml-md items-center q-mb-md justify-start align-center"
               >
                 <q-icon name="fiber_manual_record" />
-                <p class="q-mb-none q-ml-xs">Баланс:</p>
-                <p
-                  class="text-grey q-mb-none q-ml-xs"
+                <p class="q-mb-none q-ml-xs">{{$t('settings.balance')}}:</p>
+                <kbd
+                  class="text-grey q-my-auto q-mx-md"
                   v-if="balance == null || balance == 0"
                 >
-                  0T
-                </p>
-                <p v-else class="text-grey q-mb-none q-ml-xs">{{ balance }}T</p>
+                  0.0 Tkn
+                </kbd>
+                <kbd v-else class="text-grey q-my-auto q-mx-md">{{ balance }}T</kbd>
               </div>
               <q-btn
                 rounded
@@ -143,7 +147,7 @@
                 @click="depositDialog = true"
               />
             </div>
-            <p class=" full-width flex flex-center">список понравившихся видео</p>
+            <p class=" full-width flex flex-center">{{$t('settings.list_liked')}}</p>
           </div>
           <q-scroll-area
             :thumb-style="thumbStyle"
@@ -162,19 +166,24 @@
                   'mb-1',
                 ]"
               >
-                <div class="rounded-borders videoprofile" v-if="item._source.body">
+                <!-- <div class="rounded-borders videoprofile" v-if="item._source.body">
                   <vue-plyr class="mute-right">
                     <video
                       data-plyr-config='{ "controls": ["play-large","play","settings","mute"], "settings": ["quality"]}'
                       class=" videoprofile-inter"
                       :id="item._id"
-                      :src="item._source.body.video.replace('.mp4','_mobile.mp4')"
+                      :src="item._source.body.video.replace('.camsguns.com','.cg.house').replace('.mp4','_mobile.mp4')"
                       color="black"
                       type="video/mp4"
                     />
                   </vue-plyr>
                    <q-icon name='zoom_out_map' color="white" size="20px" @click="openfullvideo(item)" class="z-index-video"/>
-                </div>
+             
+                </div> -->
+                            <q-cart :disable="true" :src="item._source.body.video" :modelname="item._source.body.modelname" :modelid="item._source.body.modelid" :tags="item._source.body.tags" :data-image="item._source.body.video.replace('.camsguns.com','.cg.house').replace('.mp4','_mobile.png')">
+    <h1 slot="header">{{item._source.body.modelname}}</h1>
+    <p slot="content">{{item._source.body.title+": "+item._source.body.example+"/ "+ item._source.body.tags.join(',')}}</p>
+  </q-cart>
               </div>
             </div>
           </q-scroll-area>
@@ -200,7 +209,7 @@
                       class="custHeight"
                       data-plyr-config='{ "controls": ["mute"]}'
                       ref="dialogVideo"
-                      :src="fullvideo.video.video.replace('.mp4','_desktop.mp4')"
+                      :src="fullvideo.video.video.replace('.camsguns.com','.cg.house').replace('.mp4','_desktop.mp4')"
                       color="black"
                       type="video/mp4"
                     />
@@ -324,7 +333,6 @@
   </q-layout>
 </template>
 
-<script src="https://static.yamoney.ru/checkout-js/v1/checkout.js"></script>
 <script>
 import http from "../../http-common";
 import { LocalStorage } from "quasar";
@@ -498,7 +506,7 @@ export default {
     },
   },
   mounted() {
- console.log(this.pcm.user.rol);
+//  console.log(this.pcm.user.rol);
     // const checkout = YandexCheckout(
     //   "7CD398BA5F300CE05CE19E46EA4ACA4EB5AA9728AF031DA21ED6D331B685BB02"
     // );

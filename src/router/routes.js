@@ -16,6 +16,10 @@ const routes = [
         component: () => import("pages/recorder.vue")
       },
       {
+        path: "/createbot",
+        component: () => import("pages/desktop/botCreation.vue")
+      },
+      {
         path: "/main",
         component: () => import("pages/Main.vue")
       },

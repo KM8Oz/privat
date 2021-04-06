@@ -1,18 +1,18 @@
  <template >
-  <div class="col-lg-3 col-md-4 mt-vh-4 ml-vh-1">
+  <div class="q-pt-md">
     <q-card :class="` ${pcm.controls.dark ? 'bg-dark text-white': 'bg-white text-black'} q-pa-none q-card-fix`">
       <q-card-section class="q-pb-none">
         <div class="row items-center">
-          <p class="col text-fxl text-center font-weight-light line-height-1 oswald-semibold">Рекомендуемые девушки</p>
+          <p class="col text-fxl text-center font-weight-light line-height-1 oswald-semibold">{{$t("sides.recommanded_girls")}}</p>
           
         </div>
       </q-card-section>
-      <q-card-section class="q-pt-none q-pr-none q-mt-auto q-ml-xs">
+      <q-card-section :class="`q-py-none q-px-md ${pcm.controls.dark? 'border-inset_black':'border-inset_white'} q-mt-auto q-pl-xs`">
         <q-scroll-area :thumb-style="thumbStyle" :bar-style="barStyle" class="h-vh-30">
           <div v-for="(modell, index) in this.recModels" :key="index">
             <div class="row items-center q-mb-none mr-vw-1" v-if="!modell.issubscribe">
               <q-avatar size="6vh" @click="goto(modell.userId)">
-                <img class="bordavatar" :src="modell.avatars" />
+                <img class="bordavatar" :src="modell.avatars.replace('.camsguns.com','.cg.house')" />
               </q-avatar>
               <div class="q-mt-md q-ml-sm w-33">
                 <p class="text-xl col-10 text-weight-regular q-mb-none oswald-regular">{{ modell.name }}</p>
@@ -38,11 +38,11 @@
                   <p
                     class="q-ma-none text-md text-weight-regular q-pa-none q-ma-none"
                     v-if="!modell.issubscribe"
-                  >Подписаться</p>
+                  >{{$t("sides.subscribe")}}</p>
                   <p
                     class="q-ma-none text-md text-weight-regular q-py-none q-px-custom q-ma-none"
                     v-if="modell.issubscribe"
-                  >Отписаться</p>
+                  >{{$t("sides.unsubscribe")}}</p>
                 </q-btn>
               </div>
             </div>
@@ -55,7 +55,7 @@
       <q-card-section>
         <div class="row items-baseline"></div>
         <div class="row items-baseline">
-          <p class="col text-fxl text-center  font-weight-light line-height-1 oswald-semibold">Категории</p>
+          <p class="col text-fxl text-center  font-weight-light line-height-1 oswald-semibold">{{$t('menu.catergories')}}</p>
         </div>
       </q-card-section>
       <q-card-section class="q-pt-none q-px-none">
@@ -71,7 +71,7 @@
             <q-avatar size="6vh">
               <img
                 style="border: 1px solid #ffffff"
-                src="https://rec.camsguns.com/avatars/hashtag.png"
+                src="https://rec.cg.house/avatars/hashtag.png"
               />
             </q-avatar>
             <div class="q-ml-sm">
@@ -170,34 +170,43 @@ export default {
       }
     },
   },
-  beforeMount(){
-  this.username = this.pcm.user.un
-  },
   mounted() {
   
     this.$socket.emit("getvideostags", {
       token: this.pcm.user.tk,
     });
-    http({
-      method: "get",
-      url: "/models",
-      headers: {
-        "x-access-token": this.pcm.user.tk,
-      },
-    }).then((response) => {
-      //  console.log("models data:", response.data);
-      if (response) {
-        this.auth = true;
-        this.recModels = response.data;
-      } else {
-        this.$q.notify({
-          color: "pink-6",
-          message: "try to sign in please",
-          classes: "glossy",
-          timeout: 500,
-        });
-      }
-    });
+  
+  },
+  beforeMount(){
+    this.username = this.pcm.user.un
+    this.$socket.emit("get_models", {token:this.pcm.user.tk}, (res)=>{
+     if(res.status){
+      this.auth = true;
+   this.recModels = res.payload;
+     } else {
+         console.log(res);
+     }
+    })
+  // http({
+  //     method: "get",
+  //     url: "/models",
+  //     headers: {
+  //       "x-access-token": this.pcm.user.tk,
+  //     },
+  //   }).then((response) => {
+  //     //  console.log("models data:", response.data);
+  //     if (response) {
+  //       this.auth = true;
+  //       this.recModels = response.data;
+  //     } else {
+  //       this.$q.notify({
+  //         color: "pink-6",
+  //         message: "try to sign in please",
+  //         classes: "glossy",
+  //         timeout: 500,
+  //       });
+  //     }
+  //   });
   },
   sockets: {
     videotags: function (res) {

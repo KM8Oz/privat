@@ -13,8 +13,8 @@ const firebaseConfig = {
   projectId: "privat-chat-00000",
   storageBucket: "privat-chat-00000.appspot.com",
   messagingSenderId: "839709301841",
-  appId: "1:839709301841:web:2e9b4c357266b6073c2c70",
-  measurementId: "G-9F5CS2GVTQ"
+  appId: "1:839709301841:web:e027c8f1b1db6ebc3c2c70",
+  measurementId: "G-EK4NRP12M0"
 };
 
 export const initializerFirebase = async () => {
@@ -29,22 +29,24 @@ export const askForPermissioToReceiveNotifications = async (u,d) => {
     .then(async (registration) => {
       firebase.messaging().useServiceWorker(registration);
       const messaging = firebase.messaging();
-      await messaging.requestPermission();
-       token = await messaging.getToken();
+     const t = await Notification.requestPermission();
+      console.log(t);
+      const token = await messaging.getToken();
+      Http({
+        method: "post",
+        url: "/subscription",
+        headers:{
+          'Content-Type': 'application/json',
+        },
+        data:{
+       token:token,id:u,device:d
+        }
+      }).then((res)=>{
+       console.log("subsciption done!");
+      })
     });
 
-    Http({
-      method: "post",
-      url: "/subscription",
-      headers:{
-        'Content-Type': 'application/json',
-      },
-      data:{
-     token:token,id:u,device:d
-      }
-    }).then((res)=>{
-    //  console.log("subsciption done!");
-    })
+ 
   } catch (error) {
     console.error(error);
   }

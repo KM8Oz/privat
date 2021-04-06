@@ -1,13 +1,11 @@
 <template>
-
-  <div :class="`${pcm.controls.dark ? 'bg-dark' : 'bg-white'} row justify-center`">
-
+  <div :class="`${pcm.controls.dark ? 'bg-dark' : 'bg-white'} row justify-center home_wrapper`">
     <div
-      :class="width > 1200 ? 'col-lg-2 col-md-2 col-xs-3 mt-vh-4' : 'col-lg-2 col-md-2 col-xs-2 mt-vh-2'"
+      :class="width > 1200 ? 'col-lg-2 col-md-2 col-xs-3 mt-vh-4 bar-left' : 'col-lg-2 col-md-2 col-xs-2 mt-vh-2 bar-left'"
     >
       <q-followings v-model="tabVideos" :index="lastindex" @change="reRender2()" />
     </div>
-    <div class="col-lg-6 col-md-6 col-xs-6">
+    <div class="col-lg-5 col-md-5 col-xs-5">
       <swiper
         class="swiper h-vh-100 mousewheel"
         :options="swiperOption"
@@ -25,10 +23,10 @@
           v-bind:key="girlVideo.id[0]"
         >
          <div class="full-width full-height row justify-around"> 
-          <div class="col-lg-9 col-md-10 col-xs-10">
-   <div class="row abs-hor-centr flex flex-fix slider_min_wrapper">
+          <div class="col-lg-9 col-md-10 col-xs-10 flex justify-end">
+   <div class="row  flex flex-fix slider_min_wrapper">
       <q-avatar class="q-mb-none mr-vw-05" size="50px">
-                <img class="bordavatar" :src="girlVideo.data[0].avatar" />
+                <img class="bordavatar" :src="girlVideo.data[0].avatar.replace('.camsguns.com','.cg.house')" />
                 <q-badge floating color="green" v-if="girlVideo.data[0].islive">live</q-badge>
               </q-avatar>
               <div class="text-black slider_min_username">
@@ -58,13 +56,13 @@
               {{ girlVideo.data[0].tags ? girlVideo.data[0].tags[0] : "#нет_хэштегов" }}
             </p>
            </div>
-            <div>
+            <div class="video_wrapper">
              <vue-plyr ref="Myplyr" class="bigbtnplyr mute-right" :emit="['loadeddata']"> 
                 <LazyVideo
                  @click="clickevent"
                 loadOffset="1%"
                   data-plyr-config='{ "controls": ["play-large","mute"]}'
-                  :data-poster="girlVideo.data[0].video.replace('.mp4','_mobile.png')"
+                  :data-poster="girlVideo.data[0].video.replace('camsguns.com', 'cg.house').replace('.mp4','_mobile.png')"
                   :sources="videosrc(girlVideo.data[0].video)"
                   :attrs="{
                     wmode: 'opaque',
@@ -163,7 +161,7 @@
           <div class="row justify-center mt-vh-3">
             <div class="row self-center ">
               <q-avatar size="5.16vh">
-                <img class="bordavatar" :src="open_post_data.data[0].avatar" />
+                <img class="bordavatar" :src="open_post_data.data[0].avatar.replace('.camsguns.com','.cg.house')" />
               </q-avatar>
               <div class="row q-mx-md">
                 <p class="text-black col-12 q-mb-none text-xl text-nowrap oswald-semibold">
@@ -253,7 +251,7 @@
         >
           <div v-for="(textcom, index) in textcoms" :key="index" class="row">
             <q-avatar size="5.16vh">
-              <img class="bordavatar" :src="textcom.avatar" />
+              <img class="bordavatar" :src="textcom.avatar.replace('.camsguns.com','.cg.house')" />
             </q-avatar>
             <div class="ml-1 col">
               <p
@@ -412,10 +410,11 @@ export default {
             // }
           },
         },
+        hashNavigation: true,
         direction: "vertical",
         slidesPerView: 1,
-        speed: 500,
-        lazy: false,
+        speed: 200,
+        lazy: true,
         zoom: {
           enabled: false,
           maxRatio: 1,
@@ -425,8 +424,8 @@ export default {
         updateOnWindowResize: true,
         setWrapperSize: false,
         autoHeight: true,
-        watchSlidesProgress: true,
-        watchSlidesVisibility: true,
+        // watchSlidesProgress: true,
+        // watchSlidesVisibility: true,
         snapOnRelease: true,
         //containerModifierClass:'slidesWrapper',
        // slidesPerColumnFill:'column',
@@ -440,14 +439,14 @@ export default {
         // },
         centerInsufficientSlides:true,
         normalizeSlideIndex:true,
-        shortSwipes:false,
+        shortSwipes:true,
         slidesPerGroup:1,
         mousewheel: {
-          sensitivity: 0,
-          releaseOnEdges: false,
+          sensitivity: 1,
+          releaseOnEdges: true,
         },
         keyboard: {
-          enabled: false,
+          enabled: true,
         },
       },
       model_num: 0,
@@ -655,7 +654,7 @@ export default {
   },
   methods: {
         videosrc:function(val){
-          let url = val.replace(".mp4","_mobile.mp4")
+          let url = val.replace('camsguns.com', 'cg.house').replace(".mp4","_mobile.mp4")
         return  [url]
     },
     clickevent:function(e){
@@ -898,3 +897,34 @@ export default {
   },
 };
 </script>
+<style lang="scss">
+  .home_wrapper{
+    display: flex;
+    flex-wrap: nowrap;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0px auto;
+  }
+  .bar-left{
+    // border-left:1px solid rgba(114, 114, 114, 0.322);
+    height: 100%;
+    max-height: 700px;
+  }
+  .video_wrapper {
+    position: relative;
+    width: 100%;
+    top: -60px;
+    z-index: 0;
+}
+
+.slider_min_wrapper .slide_min_hashtags{
+  z-index: 1;
+ 
+  p{
+    color: rgb(211, 205, 205) !important;
+  }
+}
+.q-itmv2{
+  z-index: 1;
+}
+</style>

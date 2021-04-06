@@ -18,17 +18,17 @@
       class="row justify-center  q-my-none q-mx-none h-100 w-40" v-if="isFinished"
     >
       <div class="w-100 h-100  col q-mx-md q-mt-md">
-      <div class="row text-h6 text-weight-light"><p style="color:#000;">Загрузить видео</p></div>
+      <div class="row text-h6 text-weight-light"><p style="color:#000;">{{$t('record.upload_video')}}</p></div>
           <q-input class="row  h-10 text-body1 q-mb-md" outlined 
-     input-class="q-mx-xs   text-weight-light"    square v-model="form.title" placeholder="название видео..."  
+     input-class="q-mx-xs   text-weight-light"    square v-model="form.title" :placeholder="$t('record.video_name')"  
      
      />
     <q-input class="row q-mb-md  text-body1 "  input-class="q-mx-xs text-weight-light" outlined  type="textarea" square v-model="form.description"
-     placeholder='Описание видео'
+    :placeholder="$t('record.video_description')"  
      />
 
     <q-input class="row  h-10 text-body1 q-mb-md" outlined 
-     input-class="q-mx-xs   text-weight-light"    square v-model="form.tags" placeholder="#Тег1#Тег2..."  
+     input-class="q-mx-xs   text-weight-light"    square v-model="form.tags" :placeholder="$t('record.tags')"  
      
      />
         <div class="row  w-100">
@@ -39,7 +39,7 @@
                   color="pink-6"
                   no-caps
                   @click="uploadvid"
-                  label="Опубликовать"
+                  :label="$t('record.publicate')"
                 />
                 <q-btn
                   class="q-px-none q-mx-auto w-40 q-py-none q-mx-none text-weight-regular q-ml-xs "
@@ -48,7 +48,7 @@
                   color="pink-6"
                   no-caps
                   @click="forcereload"
-                  label="Отмина"
+                  :label="$t('record.annulation')"
                 />
         </div>
         <div class="row  w-100">
@@ -83,16 +83,16 @@
       thumbnails
       infinite
     >
-      <q-carousel-slide :name="1" img-src="http://rec.camsguns.com/tutos/obs1.png" />
-      <q-carousel-slide :name="2" img-src="http://rec.camsguns.com/tutos/obs2.png" />
-      <q-carousel-slide :name="3" img-src="http://rec.camsguns.com/tutos/obs3.png" />
-      <q-carousel-slide :name="4" img-src="http://rec.camsguns.com/tutos/obs4.png" />
-      <q-carousel-slide :name="4" img-src="http://rec.camsguns.com/tutos/obs5.png" />
+      <q-carousel-slide :name="1" img-src="http://rec.cg.house/tutos/obs1.png" />
+      <q-carousel-slide :name="2" img-src="http://rec.cg.house/tutos/obs2.png" />
+      <q-carousel-slide :name="3" img-src="http://rec.cg.house/tutos/obs3.png" />
+      <q-carousel-slide :name="4" img-src="http://rec.cg.house/tutos/obs4.png" />
+      <q-carousel-slide :name="4" img-src="http://rec.cg.house/tutos/obs5.png" />
     </q-carousel>
   </div>
 </section>
 <!--  bg -->
-<section v-else-if="typefile === 'upload'" :class="pcm.controls.dark ? 'row bg-black':'row'">
+<section v-else-if="typefile === 'upload'" :class="pcm.controls.dark ? 'justify-center upload-secion  row bg-black':' upload-secion justify-center row'">
    <div class="col-lg-2 col-md-3 mt-vh-4">
      <q-followings />
     </div>
@@ -100,8 +100,8 @@
       :class="`col-lg-7 col-md-5 mt-vh-4 flex  justify-center fullpageMT  ${pcm.controls.dark?'text-white':'text-dark'}`"
     >
       <div  v-if="!isUploading" class="m-mx-23 h-100 w-100 col ">
-      <div class="row text-h6 text-weight-light"><p >Загрузить видео</p></div>
-      <div class="row text-weight-light"><p >выберите видеофайл.</p></div>
+      <div class="row text-h6 text-weight-light"><p >{{$t('record.upload_video')}}</p></div>
+      <div class="row text-weight-light"><p >{{$t('record.choise_file')}}</p></div>
      
 <q-file :class=" `q-px-none q-py-auto q-mb-md text-subtitle1`" 
  counter
@@ -109,7 +109,7 @@
   @rejected="onRejected"
   accept=".mp4,.avi,.mkv,.wmv"
   :bg-color="pcm.controls.dark?'grey':''"
-  filled v-model="form.video" label="выберите видео">
+  filled v-model="form.video" :label="$t('record.choise_file')">
          <template v-if="form.video" v-slot:append>
           <q-icon name="cancel" @click.stop.prevent="form.video = null" class="cursor-pointer" />
         </template>
@@ -118,18 +118,20 @@
           </div>
       </q-file>
           <q-input class="row  h-10 text-body1 q-mb-md" outlined 
-     :input-class="`q-mx-xs ${pcm.controls.dark?'text-white':'text-dark'} text-weight-light`"    square v-model="form.title" placeholder="название видео..."  
+     :input-class="`q-mx-xs ${pcm.controls.dark?'text-white':'text-dark'} text-weight-light`"    square v-model="form.title"
+      :placeholder="$t('record.video_name')"  
        :color="pcm.controls.dark?'white':'dark'"
        :bg-color="pcm.controls.dark?'grey':''"
      />
     <q-input class="row q-mb-md  text-body1 "  :input-class="`q-mx-xs ${pcm.controls.dark?'text-white':'text-dark'} text-weight-light`" outlined  type="textarea" square v-model="form.description"
-     placeholder='Описание видео'
+     :placeholder="$t('record.video_description')"  
      :color="pcm.controls.dark?'white':'dark'"
      :bg-color="pcm.controls.dark?'grey':''"
      />
 
     <q-input class="row  h-10 text-body1 q-mb-md" outlined 
-     :input-class="`q-mx-xs ${pcm.controls.dark?'text-white':'text-dark'} text-weight-light`"    square v-model="form.tags" placeholder="#Тег1#Тег2..."  
+     :input-class="`q-mx-xs ${pcm.controls.dark?'text-white':'text-dark'} text-weight-light`"    square v-model="form.tags"
+      :placeholder="$t('record.tags')"  
        :color="pcm.controls.dark?'white':'dark'"
        :bg-color="pcm.controls.dark?'grey':''"
      />
@@ -142,7 +144,7 @@
 
                   no-caps
                   @click="uploadvid"
-                  label="Загрузить"
+                  :label="$t('record.upload')"
                 />
         </div>
       </div>
@@ -158,16 +160,18 @@
       track-color="grey-3"
       class="q-ma-md oswald-semibold text-center"
     >
-      {{ uploadState2 ? "перестройка" : uploadState3 ? "сохранить" : "передача"  }} <br/>
+      {{ uploadState2 ? $t('record.configuration') : uploadState3 ? $t('streaming.save') : $t('record.sending')  }} <br/>
         {{ !uploadState3 && !uploadState2 ?  form.video ? Math.fround((form.video.size / 1024)*progress).toPrecision(2)+'Kb' : 0+'Mb': '#*#'}}
     </q-circular-progress>
        <q-linear-progress size="25px" :value="progress" track-color="red" stripe  color="pink-7" class="q-mt-sm" />
       </div>
     </div>
     <!--Рекомендации-->
-  <q-listrec />
+ <div class="col-lg-3 col-md-3 mt-vh-4">
+      <q-listrec />
+    </div>
 </section>
-   <section v-else :class="`row fit justify-center ${pcm.controls.dark ?'bg-dark text-white':'text-dark'}`">
+   <section v-else :class="`row fit h-vh-100 justify-center ${pcm.controls.dark ?'bg-dark text-white':'text-dark'}`">
     <div class="col-lg-2 col-md-3 mt-vh-4">
      <q-followings />
     </div>
@@ -177,22 +181,24 @@
       class="col-lg-6 col-md-6 mt-vh-4 q-mx-md justify-center   "
     >
       <div class="h-100  col-12 ">
-      <div class="row text-h6 text-weight-light"><p >Записать видео OBS</p></div>
-      <div class="row text-weight-light"><p >1 - скопируйте и вставьте сервер и ключ в OBS и нажмите кнопку начать запись.</p></div>
-        <div class="row text-weight-light"><p >2 - продолжайте отслеживать размер видео на странице (не закрывайте эту страницу).</p></div>
-      <div class="row text-weight-light"><p >3 - нажмите опубликовать.</p></div>
+      <div class="row text-h6 text-weight-light"><p >{{$t('record.obs.title')}}</p></div>
+      <div class="row text-weight-light"><p >{{$t('record.obs.1')}}</p></div>
+        <div class="row text-weight-light"><p >{{$t('record.obs.2')}}</p></div>
+      <div class="row text-weight-light"><p >{{$t('record.obs.3')}}</p></div>
 
    <div class="row justify-center">
-              <q-input class="col-12  h-10 text-body1 q-mb-md" outlined 
-     input-class="q-mx-xs   text-weight-light"    square v-model="form.title" placeholder="название видео..."  
+              <q-input class="col-12 h-10 text-body1 q-mb-md" outlined 
+     :input-class="`q-px-xs text-weight-light ${pcm.controls.dark? 'bg-white': ''}`"    square v-model="form.title"
+      :placeholder="$t('record.video_name')"  
      
      />
-    <q-input class="col-12 q-mb-md  text-body1 "  input-class="q-mx-xs text-weight-light" outlined  type="textarea" square v-model="form.description"
-     placeholder='Описание видео'
+    <q-input class="col-12 q-mb-md  text-body1 "   :input-class="`q-px-xs text-weight-light ${pcm.controls.dark? 'bg-white': ''}`" outlined  type="textarea" square v-model="form.description"
+      :placeholder="$t('record.video_description')"  
      />
 
     <q-input class="col-12  h-10 text-body1 q-mb-md" outlined 
-     input-class="q-mx-xs   text-weight-light"    square v-model="form.tags" placeholder="#Тег1#Тег2..."  
+      :input-class="`q-px-xs text-weight-light ${pcm.controls.dark? 'bg-white': ''}`"    square v-model="form.tags"
+       :placeholder="$t('record.tags')"  
      
      />
                    <div class="col-12"><q-btn
@@ -204,7 +210,7 @@
                   rounded
                   :color="obsbtncolor"
                   no-caps
-                  :label="obsbtnlabel"
+                  :label="$t('record.obs.generate')"
                 >
                  <template v-slot:loading>
         <q-spinner-radio />
@@ -235,7 +241,7 @@
                 filled
                 autogrow
                 readonly
-                value="Key: ********************************************"
+                :value="`${$($t('record.obs.key'))}: ********************************************`"
                 label-slot
               >
                 <template v-slot:append>
@@ -255,8 +261,8 @@
       class="col-lg-5 col-md-5 mt-vh-4 d-flex justify-content-center fullpageMT"
     >
       <div class="m-mx-23 h-100 w-100 col ">
-      <div class="row text-h6 text-weight-light"><p >Записать видео</p></div>
-      <div class="row text-weight-light"><p >Запишите видео используя видеокамеру или выберите видеофайл.</p></div>
+      <div class="row text-h6 text-weight-light"><p >{{$t('record.record_video')}}</p></div>
+      <div class="row text-weight-light"><p >{{$t('record.title')}}</p></div>
       <div class="row justify-center">
           <div class="col-6"> <q-btn
                   class=" q-px-xs q-py-xs  w-100 text-weight-regular "
@@ -265,7 +271,7 @@
                   rounded
                   color="pink-6"
                   no-caps
-                  label="Записать видео"
+                  :label="$t('record.record_video')"
                 /></div>
           <div class="col-6"><q-btn
                   class=" q-px-xs q-py-xs q-ml-xs w-100 text-weight-regular  "
@@ -274,7 +280,7 @@
                   rounded
                   color="pink-6"
                   no-caps
-                  label="Загрузить видео"
+                  :label="$t('record.upload_video')"
                 /></div>
                    <div class="col-12"><q-btn
                   class=" q-px-xs q-py-xs q-my-xs q-mx-auto w-100 text-weight-regular  "
@@ -283,7 +289,7 @@
                   rounded
                   color="pink-6"
                   no-caps
-                  label="Записать видео OBS"
+                  :label="$t('record.obs.title')"
                 /></div>
       </div>
       </div>
@@ -579,7 +585,7 @@ if (playPromise !== undefined) {
    //console.log(data);
    this.obsdatarecorded = data.progress
    if(data.status === "done"){
-     this.form.url =  'https://rec.camsguns.com/'+data.filename+'.mp4'
+     this.form.url =  'https://rec.cg.house/'+data.filename+'.mp4'
      this.obsbtnloading = false
      this.obsbtncolor = 'green'
      this.obsbtnlabel = 'публиковать'
@@ -595,7 +601,7 @@ if (playPromise !== undefined) {
       //   //  console.log('subscribe',res);
       //     this.isFinished = true;
       //      this.video.srcObject  = null
-      //     this.video.src  = 'https://record.camsguns.com'+res
+      //     this.video.src  = 'https://record.cg.house'+res
       //     this.video.play()
       //     this.video.controls = true;
       //       //this.activeC = 'w-70'
@@ -641,6 +647,9 @@ video::-webkit-media-controls-volume-control-hover-background {
     display: none;
 }
 
-
+.upload-secion{
+  max-width: 1400px;
+  margin:0px auto;
+}
 
 </style>

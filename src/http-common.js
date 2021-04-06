@@ -12,7 +12,7 @@ export default axios.create({
   }
 });
 // exports.http2 = axios.create({
-//   baseURL: "https://back.camsguns.com/",
+//   baseURL: "https://back.cg.house/",
 //   headers: {
 //     "Content-type": "application/json"
 //   }

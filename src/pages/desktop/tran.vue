@@ -1,16 +1,16 @@
 <template>
-  <q-page :class="`${pcm.controls.dark? 'bg-dark text-white':'bg-white text-black'}`">
-    <div class="row">
+  <q-page :class="`${pcm.controls.dark? 'bg-dark text-white row  justify-center':'bg-white text-black row justify-center'}`">
+    <div class="trans_wrapper">
         <div
       :class="width > 1200 ? 'col-lg-2 col-md-3 mt-vh-4' : 'col-lg-2 col-xs-1 mt-vh-2'"
     >
       <q-followings v-model="tabVideos" :index="lastindex" @change="reRender()" />
     </div>
-    <div class="col-lg-9 col-md-9 row">
+    <div class="col-lg-9 col-md-9 row ">
         <div class="row w-100">
       <q-toolbar class=" text-white rounded-borders">
         <q-space />
-        <q-input dark borderless v-model="searchQuery" placeholder="model name" :input-class="pcm.controls.dark ? 'text-center text-uppercase text-subtitle2 text-weight-light': 'text-dark text-center text-uppercase text-subtitle2 text-weight-light'" class="q-ml-md">
+        <q-input dark borderless v-model="searchQuery" placeholder="search" :input-class="pcm.controls.dark ? 'text-center text-uppercase text-subtitle2 text-weight-light': 'text-dark text-center text-uppercase text-subtitle2 text-weight-light'" class="q-ml-md">
           <template v-slot:append>
             <q-icon v-if="searchQuery === ''" name="search" :color="pcm.controls.dark ? 'white':'dark'"/>
             <q-icon v-else name="clear" class="cursor-pointer" @click="text = ''" />
@@ -27,7 +27,7 @@
           </q-card>
         </router-link> -->
         <div v-if="models.length === 0" class="self-center banner-no-streams  oswald-bold q-ma-auto">
-         некого в эфире <q-icon name="record" class="q-mx-md"></q-icon>
+        {{$t("lives.banner")}} <q-icon name="record" class="q-mx-md"></q-icon>
         </div>
         <q-stream class="col-3"  v-for="(model,index) in models" :key="index" :img="img(model.screen)" :name="model.username" :time="model.otherData.updatedAt" :link="'/'+model.link"/>
       </div>
@@ -106,7 +106,7 @@ export default {
   }
 };
 </script>
-<style scoped>
+<style lang="scss">
 .vh100 {
   height: 90vh;
   width: 100%;
@@ -134,5 +134,10 @@ export default {
 .zi200 {
   z-index: 200;
 }
-</style
->>
+.trans_wrapper{
+  display: flex;
+  flex-wrap: nowrap;
+  width:100%;
+  max-width: 1400px;
+}
+</style>

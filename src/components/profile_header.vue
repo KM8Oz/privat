@@ -12,7 +12,7 @@
             </div>
         </div>
         <q-avatar size="100px" class="q-profile_avatar">
-            <img :src="avatar" />
+            <img :src="avatar.replace('.camsguns.com','.cg.house')" />
         </q-avatar>
     </div>
 </template>
@@ -94,7 +94,6 @@ export default {
 
 .q-profile_avatar {
     position: absolute;
-    border: 2px solid #ebedee;
     -webkit-user-drag: none;
     bottom: 20px;
     background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);

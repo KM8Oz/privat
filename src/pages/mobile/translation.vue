@@ -35,7 +35,7 @@
           autoplay
           playsinline
           muted
-          poster="https://rec.camsguns.com/stream.png"
+          poster="https://rec.cg.house/stream.png"
         ></video>
         <q-btn
           round
@@ -179,14 +179,14 @@
                 >
                   <div class="q-ma-none row flexchat" v-if="item.ismodel">
                              <q-chip dense>
-        <q-avatar color="red" text-color="white">    <img :src="item.avatar" /></q-avatar>
+        <q-avatar color="red" text-color="white">    <img :src="item.avatar.replace('.camsguns.com','.cg.house')" /></q-avatar>
         {{ item.name }}:
       </q-chip>
                     <p class="text-xl text-pink-6 q-ma-none q-ml-xs">{{ item.text }}</p>
                   </div>
                   <div class="q-ma-none row flexchat" v-else-if="!item.ismodel && item.avatar">
                     <q-chip dense>
-        <q-avatar color="red" text-color="white"><img :src="item.avatar" /></q-avatar>
+        <q-avatar color="red" text-color="white"><img :src="item.avatar.replace('.camsguns.com','.cg.house')" /></q-avatar>
         {{ item.name }}:
       </q-chip>
                     <p class="text-white text-xl q-ma-none q-ml-xs">{{ item.text }}</p>
@@ -200,7 +200,7 @@
                   </div>
                    <div class="q-ma-none row flexchat" v-else>
                     <q-chip dense>
-        <q-avatar color="red" text-color="white"><img :src="item.avatar" /></q-avatar>
+        <q-avatar color="red" text-color="white"><img :src="item.avatar.replace('.camsguns.com','.cg.house')" /></q-avatar>
         {{ item.name }}:
       </q-chip>
                     <p class="text-white text-xl q-ma-none q-ml-xs">{{ item.text }}</p>
@@ -404,7 +404,7 @@
 <script>
 import Loader from "../Loader.vue";
 import http from "../../http-common";
-import { LocalStorage } from "quasar";
+// import { LocalStorage } from "quasar";
 import * as getMedia from 'get-user-media-promise';
 import { mapState } from 'vuex';
 export default {
@@ -428,8 +428,8 @@ export default {
       barStyle: {
         display: "none",
       },
-      username: LocalStorage.getItem("username"),
-      myname: LocalStorage.getItem("name"),
+      username: null,
+      myname: null,
       useravatar: null,
       streamDesc: null,
       tags: null,
@@ -819,7 +819,7 @@ export default {
      this.$root.$emit('changepage', 1)
     },
     //  start(){
-    //    this.connection = new WebSocket("wss://record.camsguns.com/streams?token=" + this.pcm.user.tk +"");
+    //    this.connection = new WebSocket("wss://record.cg.house/streams?token=" + this.pcm.user.tk +"");
     //    this.mediaRecorder.addEventListener('dataavailable',videoDataHandler)
     //    this.streamStarted = true;
     //  },
@@ -837,7 +837,7 @@ export default {
     start:async function(vm){
           // let devices = (await navigator.mediaDevices.enumerateDevices()).filter(e=>e.kind === "videoinput").map(e=>e.deviceId)
       const websocketEndpoint =
-        "wss://record.camsguns.com/streams?token=" + this.pcm.user.tk + "&type=mobile";
+        "wss://record.cg.house/streams?token=" + this.pcm.user.tk + "&type=mobile";
       this.connection = new WebSocket(websocketEndpoint);
       
      getMedia({
@@ -859,7 +859,7 @@ export default {
     },
     startPrivate() {
       const websocketEndpoint =
-        "wss://record.camsguns.com/private?token=" +
+        "wss://record.cg.house/private?token=" +
         this.pcm.user.tk +
         "&modelid=" +
         this.pcm.user.id +

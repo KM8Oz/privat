@@ -4,7 +4,7 @@
                     subscribe(videodata.data[0].modelid, index, videodata.data[0].avatar)
                   " :ref="'modelsub' + videodata.id[0]">
                 <q-avatar size="40px"   class="b-borderwhite2">
-                    <q-img contain :src="videodata.data[0].avatar" ratio=".9" />
+                    <q-img contain :src="videodata.data[0].avatar.replace('.camsguns.com','.cg.house')" ratio=".9" />
                 </q-avatar>
                 <q-badge class="absolute-top toolbarbdg3" floating rounded v-if="!(videodata.data[0].subed)"  >
                     <q-icon name="add_circle" color="red" class="q-pa-xs" />
@@ -46,7 +46,7 @@
                 <q-scroll-area :ref="'commentsscroll'+videodata.id[0]" :thumb-style="thumbStyle" :bar-style="barStyle" class="comdial ml-vw-1 q-pa-none h-vh-32">
                     <div v-for="(textcom, index) in textcoms" :key="index" class="row">
                         <q-avatar size="5.16vh">
-                            <img class="bordavatar" :src="textcom.avatar" />
+                            <img class="bordavatar" :src="textcom.avatar.replace('.camsguns.com','.cg.house')" />
                         </q-avatar>
                         <div class="ml-1 col">
                             <p :class="

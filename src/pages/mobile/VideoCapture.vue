@@ -230,7 +230,7 @@ export default {
   sockets: {
     vsuccCreated: function (response) {
       if (response.status == "ok") {
-        this.$refs.videoRec.src = response.videourl;
+        this.$refs.videoRec.src = response.videourl.replace('.camsguns.com','.cg.house');
         // this.mediaStream.stream.getTracks().forEach(track => track.stop());
         this.isRecording = false;
         this.activeC = "h-vh-68 ";
@@ -466,7 +466,7 @@ export default {
       this.videoUrl = this.uploadUrl + fileName + ".mp4";
       this.toggleVideo();
       this.$refs.videoRec.srcObject = null;
-      this.$refs.videoRec.src = this.videoUrl;
+      this.$refs.videoRec.src = this.videoUrl.replace('.camsguns.com','.cg.house');
       this.isUploading = false;
       LocalStorage.set("record", this.videoUrl);
     },

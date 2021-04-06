@@ -30,7 +30,7 @@ export default {
         const token = LocalStorage.getItem("token");
         //console.log(file);
         resolve({
-          url: 'https://back.camsguns.com/passuploader/upload',
+          url: 'https://back.cg.house/passuploader/upload',
           method: 'POST',
           headers: [
             { name: 'Content-Type', value: 'application/json-patch+json'},

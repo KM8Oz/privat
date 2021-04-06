@@ -49,7 +49,7 @@
           >
             <q-item-section avatar>
               <q-avatar size="40px" class="b-borderwhite">
-                <img :src="girlVideo.data[0].avatar" />
+                <img :src="girlVideo.data[0].avatar.replace('.camsguns.com','.cg.house')" />
               </q-avatar>
             </q-item-section>
 
@@ -140,7 +140,7 @@
           >
             <q-item-section avatar>
               <q-avatar size="40px" class="b-borderwhite">
-                <img :src="girlVideo.data[0].avatar" />
+                <img :src="girlVideo.data[0].avatar.replace('.camsguns.com','.cg.house')" />
               </q-avatar>
             </q-item-section>
 
@@ -231,7 +231,7 @@
           >
             <q-item-section avatar>
               <q-avatar size="40px" class="b-borderwhite">
-                <img :src="girlVideo.data[0].avatar" />
+                <img :src="girlVideo.data[0].avatar.replace('.camsguns.com','.cg.house')" />
               </q-avatar>
             </q-item-section>
 
@@ -681,8 +681,9 @@ console.log('page:',index);
   beforeMount(){
      //   console.log('beforemount');
       //  this.auth = this.pcm.auth;
-       
-   
+      if(this.pcm.auth) this.$socket.emit("s_getuseravatar", {
+        userid: this.pcm.user.id,
+      });
   },
    cl_openPostComment(id, amount, index) {
             if (!this.auth) {
@@ -712,6 +713,9 @@ console.log('page:',index);
   },
 
   sockets: {
+      cl_getuseravatar: function (response) {
+      this.$store.dispatch("pcm/useravatar", response)
+    },
     cl_getAllMassage: function(response) {
       //console.log(response);
         if(response.id){
@@ -784,7 +788,7 @@ this.swiperindex.home = i
       }
     },
      videosrc:function(val){
-        return  [val.replace(".mp4","_mobile.mp4")]
+        return  [val.replace(".mp4","_mobile.mp4").replace('.camsguns.com','.cg.house')]
     },
     fullscreen:function(){
      this.$root.$emit('fullscreen',{state:!this.pcm.controls.fullscreen})

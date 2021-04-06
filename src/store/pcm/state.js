@@ -9,7 +9,8 @@ export default () => ({
     controls: {
       mute:false,
       dark:false,
-      fullscreen:false
+      fullscreen:false,
+      language:'ru'
     },
     vidControls:{
     number:{
@@ -17,6 +18,9 @@ export default () => ({
       rate:10,
       lastIndex:0
     },
+    bots:[
+
+    ],
     sort:{
       likes:false,
       watch:false
@@ -26,8 +30,18 @@ export default () => ({
       tk:null,
       id:null,
       un:null,
-      rol:false
+      rol:false,
+      avatar:null
     },
+    languages:{
+      en:{
+       version:"ALPHA VERSION"
+    },
+    ru:{
+      version:"АЛЬФА ВЕРСИЯ!"
+    },
+    activated:null
+  },
     slides:[],
     platform:null,
     auth:false,

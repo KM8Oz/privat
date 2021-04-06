@@ -5,7 +5,7 @@
       playsInline
       controlsList="notimeline noremoteplayback nodownload nofullscreen noremoteplayback"
       :controls="false"
-      :src="src"
+      :src="src.replace('.camsguns.com','.cg.house')"
       :poster="poster"
 
       :muted="muted"

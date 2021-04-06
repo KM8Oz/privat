@@ -45,6 +45,12 @@ export default {
   platform: (state, payload) => {
     state.platform = payload.plt
   },
+  useravatar:function(state, payload){
+     if(payload.status == 'ok') state.user.avatar = payload.avatar
+  },
+  updateBots(state, res){
+    state.bots = res
+   },
   liking: (state, payload) => {   
    // console.log(payload);                          // liking
    if(payload.res.tab){
@@ -68,6 +74,10 @@ export default {
     )
     : null;
    }
+  },
+  switch_language:function(state, payload){
+    state.controls.language = payload.lang;
+    state.languages.activated = payload.lang === 'ru'? state.languages.ru : state.languages.en;
   },
   subscribing: (state, payload) => {                        // subscribing
     let id = payload.res.id;

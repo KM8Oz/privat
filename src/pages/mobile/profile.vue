@@ -8,7 +8,7 @@
         <transition name="slide"><muser class="fullpage" :pravite="true"></muser></transition>
       </div>
     </div>
-    <div v-if="!nnologin">
+    <div v-if="login">
       <q-btn
         flat
         class="mbackbut"
@@ -213,7 +213,7 @@
                 </div>
                 <q-btn
                   label="Уже есть аккаунт?"
-                  @click="signUp = false"
+                  @click="signin()"
                    outline
                   rounded
                   text-color="pink"
@@ -224,12 +224,12 @@
           <q-btn
             label="Зарегистрироваться"
             @click="createUser()"
-            text-color="black"
+            text-color="white"
             dense
             rounded
             color="pink-6"
             :disable="!validateReg"
-            class="w-vw-40 text-comment-14 btnwhitedis ml-auto mr-auto  mt-vh-4 h-vh-1080-50px"
+            class="q-px-md q-py-xs q-mt-md q-mx-auto"
           />
           <!-- :disable ="func" == quasar error  -->
         </div>
@@ -283,7 +283,7 @@
       </q-form>
     </div>
     <div class="authbot">
-      <div v-if="nologin" class="flex-center-div">
+      <div v-if="login" class="flex-center-div">
         <p class="textgray w-mxc  q-ma-none">
           Ещё нет аккаунта?
           <q-btn
@@ -309,6 +309,8 @@ import { mapState } from 'vuex';
 import http from "../../http-common";
 import MModel from "./profile_model.vue";
 import MUser from "./profile_user.vue";
+import { initializerFirebase, askForPermissioToReceiveNotifications } from "../../firebase";
+
 export default {
   name: "profile",
   components: {
@@ -321,6 +323,7 @@ export default {
       nnologin: false,
       nologin: false,
       regname: null,
+      login:null,
       regemail: null,
       signupform: false,
       accept: false,
@@ -354,6 +357,7 @@ export default {
    this.username =  this.pcm.user.un
    this.userid = this.pcm.user.id
    this.nnologin = this.auth
+   this.login = !this.auth
     // http({
     //   method: "get",
     //   url: "/verify_sess",
@@ -458,11 +462,11 @@ export default {
       this.resetPass = false;
       this.nologin = false;
       this.signupform = true;
-      this.nnologin = false;
+      this.login = false;
     },
     signin() {
       this.resetPass = false;
-      this.nologin = true;
+      this.login = true;
       this.signupform = false;
       this.nnologin = false;
     },
@@ -470,6 +474,7 @@ export default {
       this.resetPass = true;
       this.signupform = false;
       this.nologin = false;
+      this.login = false;
       this.nnologin = false;
     },
     signupstart() {
@@ -569,7 +574,13 @@ export default {
           this.signupform = false;
           this.auth = false;
           this.nnologin = false;
-          location.reload();
+           initializerFirebase().then(() =>
+                        askForPermissioToReceiveNotifications(
+                            response.data.userId,
+                            Platform.is
+                        ).then(() => console.log("permession requested"))
+                    );
+                     location.reload();
         } else {
           this.$q.notify(response.data.reason);
           this.nologin = true;

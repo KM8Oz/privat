@@ -6,7 +6,7 @@
       </div>
 
       <div v-if="!auth" class="flex justify-center q-mt-xl text-black col">
-        <h5>you can't access this data try ti signin</h5>
+        <h5>you can't access this data try to signin</h5>
       </div>
 
       <div
@@ -17,7 +17,7 @@
         <div v-if="thisModel" :class="pcm.controls.dark? 'w-60 h-100 m-mx-auto text-white': 'w-60 h-100 m-mx-auto text-dark'">
           <div class="row">
             <q-avatar size="10vh">
-              <img style="border: 1px solid #ffffff" :src="ifexist(thisModel,'avatars') ? thisModel.avatars : 'https://rec.camsguns.com/avatars/hashtag.png'" />
+              <img style="border: 1px solid #ffffff" :src="ifexist(thisModel,'avatars') ? thisModel.avatars.replace('.camsguns.com','.cg.house') : 'https://rec.cg.house/avatars/hashtag.png'" />
             </q-avatar>
 
             <div class="row h-md flex-1 items-center">
@@ -137,7 +137,7 @@
                       data-plyr-config='{ "controls": ["play-large","play","settings","mute"], "settings": ["quality"]}'
                       class="col-12"
                       :id="item._id"
-                      :src="item._source.body.video.replace('.mp4','_mobile.mp4')"
+                      :src="item._source.body.video.replace('.mp4','_mobile.mp4').replace('.camsguns.com','.cg.house')"
                       color="black"
                       type="video/mp4"
                     />
@@ -159,7 +159,7 @@
               <q-avatar size="10vh">
                 <img
                   style="border: 1px solid #ffffff"
-                  :src="thisModel.avatars ? thisModel.avatars : 'https://rec.camsguns.com/avatars/hashtag.png'"
+                  :src="thisModel.avatars ? thisModel.avatars.replace('.camsguns.com','.cg.house') : 'https://rec.cg.house/avatars/hashtag.png'"
                 />
               </q-avatar>
               <div class="row h-mc flex-1 flex-center">
@@ -268,7 +268,7 @@
                       data-plyr-config='{ "controls": ["play-large","play","settings","mute"], "settings": ["quality"]}'
                       class="col-12 "
                       :id="item._id"
-                      :src="item.body.video.replace('.mp4','_desktop.mp4')"
+                      :src="item.body.video.replace('.mp4','_desktop.mp4').replace('.camsguns.com','.cg.house')"
                       color="black"
                       type="video/mp4"
                     />

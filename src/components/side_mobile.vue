@@ -25,7 +25,7 @@
         <q-item>
           <q-item-section avatar>
             <q-avatar>
-              <img :src="model.avatars" draggable="false">
+              <img :src="model.avatars.replace('.camsguns.com','.cg.house')" draggable="false">
                <q-badge v-if="model.is_vip === 'Y'" floating color="teal">VIP</q-badge>
             </q-avatar>
           </q-item-section>

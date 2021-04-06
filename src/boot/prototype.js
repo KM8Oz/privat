@@ -28,7 +28,7 @@ Vue.prototype._G.signUp=false;
 //     module.exports = require('node-fetch');
 // }
 var BinaryClient = require('binaryjs-client').BinaryClient;
-Vue.prototype.BinaryClient = async ()=> new BinaryClient('wss://video.camsguns.com');
+Vue.prototype.BinaryClient = async ()=> new BinaryClient('wss://video.cg.house');
 fetch("https://api.exchangeratesapi.io/latest?symbols=USD,RUB").then(async (res)=>{
     Vue.prototype.rates = await res.json()
 })
@@ -36,17 +36,12 @@ Vue.prototype.$reloadall = function(){
     this.$forceUpdate();
 }
 // Vue.prototype.store = store
-if(true){
-    Vue.prototype._G.recUrl="https://str.camsguns.com";
-    Vue.prototype._G.wsRecordURL="wss://record.camsguns.com";
-    Vue.prototype._G.backUrl="https://back.cg.house";
-    Vue.prototype._G.ioUrl="https://io.camsguns.com";
-}else{
-    Vue.prototype._G.recUrl="https://rec.cg.house";
+
+    Vue.prototype._G.recUrl="https://str.cg.house";
     Vue.prototype._G.wsRecordURL="wss://record.cg.house";
     Vue.prototype._G.backUrl="https://back.cg.house";
-    Vue.prototype._G.ioUrl="https://io.cg.house";   
-}
+    Vue.prototype._G.ioUrl="https://io.cg.house";
+
 
 Vue.use(Chat) 
 

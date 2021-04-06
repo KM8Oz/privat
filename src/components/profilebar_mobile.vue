@@ -14,7 +14,7 @@
          <q-item v-for="(contact, index) in data.subs" :key="index" class="q-mb-sm" clickable v-ripple :to="'/user/'+contact.modelid">
         <q-item-section avatar>
           <q-avatar>
-            <img :src="contact.avatar">
+            <img :src="contact.avatar.replace('.camsguns.com','.cg.house')">
           </q-avatar>
         </q-item-section>
 

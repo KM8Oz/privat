@@ -27,7 +27,7 @@
  
              <q-card-section horizontal>
      
-             <q-img :src="img"  class="col"  v-if="alive" alt="nonoe">
+             <q-img :src="img.replace('.camsguns.com','.cg.house')"  class="col"  v-if="alive" alt="nonoe">
               <div class="absolute-bottom time2 text-weight-light text-overline">@{{name}} </div>
             <div class="time text-overline">{{
            getdatediff(time).month !== 0 ? `${getdatediff(time).month} months ago`:

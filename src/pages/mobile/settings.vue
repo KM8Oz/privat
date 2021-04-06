@@ -30,7 +30,7 @@
               <q-img
                 v-if="ava == null"
                 class="q-pa-none"
-                :src="thisModel.avatars"
+                :src="thisModel.avatars.replace('.camsguns.com','.cg.house')"
               >
                 <q-file
                   @input="getImgBase64()"
@@ -62,7 +62,7 @@
                 <q-img
                   v-if="newava == null"
                   class="q-pa-none"
-                  :src="thisModel.avatars"
+                  :src="thisModel.avatars.replace('.camsguns.com','.cg.house')"
                 >
                 </q-img>
                 <q-img v-else class="q-pa-none" :src="newava"> </q-img>

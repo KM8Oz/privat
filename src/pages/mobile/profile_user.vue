@@ -13,7 +13,7 @@
             <div class="row ">
                   <div class="col-12 flex text-center row justify-center">
                     <div class="col-12">
-                        <q-img class="mobile-ui-profile-img w-100" :src="thisModel ? thisModel.avatars : ''">
+                        <q-img class="mobile-ui-profile-img w-100" :src="thisModel ? thisModel.avatars.replace('.camsguns.com','.cg.house') : ''">
     
                             <div class="absolute-top-right bg-none2">
                                 <q-fab text-color="white" class="maxc-w self-end " icon="more_horiz" direction="left" :ripple="false" active-icon="circle">
@@ -83,7 +83,7 @@
                     ]">
                             <div class="bg-black rounded-borders videoprofile" v-if="item._source.body">
                                 <vue-plyr class="mute-right">
-                                    <video controls="false" data-plyr-config='{ "controls": ["play-large","play","mute"]}' class="col-12 videoprofile-inter" :id="item._id" :src="item._source.body.video.replace('.mp4','_mobile.mp4')" color="black" type="video/mp4" />
+                                    <video controls="false" data-plyr-config='{ "controls": ["play-large","play","mute"]}' class="col-12 videoprofile-inter" :id="item._id" :src="item._source.body.video.replace('.mp4','_mobile.mp4').replace('.camsguns.com','.cg.house')" color="black" type="video/mp4" />
                                 </vue-plyr>
                                 <q-icon name='zoom_out_map' color="white" size="20px" @click="openfullvideo(item)" class="z-index-video" />
                             </div>
@@ -96,7 +96,7 @@
                 <q-dialog v-model="fullvideo.open" position="bottom" transition-show="bounceIn">
                     <q-card class="profilefullvideo" v-if="fullvideo.video">
                         <vue-plyr class="mute-right">
-                            <video @play="setProgressBar" controls="false" data-plyr-config='{ "controls": ["mute"]}' ref="dialogVideo" :src="fullvideo.video.video" color="black" type="video/mp4" />
+                            <video @play="setProgressBar" controls="false" data-plyr-config='{ "controls": ["mute"]}' ref="dialogVideo" :src="fullvideo.video.video.replace('.camsguns.com','.cg.house')" color="black" type="video/mp4" />
                         </vue-plyr>
                         <q-linear-progress :value="fullvideo.progress" color="pink" />
     

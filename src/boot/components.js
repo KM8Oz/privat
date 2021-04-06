@@ -11,6 +11,8 @@ import QnewModelv2 from '../components/nemodelmobile'
 // import 'rtmp-player/dist/rtmp-player.css'
 // import rtmpPlayer from 'rtmp-player'
 // Vue.use(rtmpPlayer)
+
+import LanguageSwitcher  from "../components/langSwitcher.vue";
 import VueProfile from '../components/profile_header'
 import ListRec from '../components/recomendations'
 import ListFol from '../components/listfollowings'
@@ -23,6 +25,7 @@ import Toolbar from '../components/mobiletoolbar.vue'
 import SideMOBILE from '../components/side_mobile.vue'
 // import Mobileplayer from '../components/video_mobile.vue' 
 import Stream from '../components/stream.vue'
+import Qcart from '../components/cardhover.vue'
 import Tiktok from '../components/tiktok.vue'
 import VueLazyLoadVideo from 'vue-lazyload-video'
 import VueGoodshareVkontakte from "vue-goodshare/src/providers/Vkontakte.vue";
@@ -41,6 +44,7 @@ import VueGoodshareEmail from "vue-goodshare/src/providers/Email.vue";
 //Vue.component('burger-button', BurgerButton);
 Vue.component('q-silde-mobile', SideMOBILE);
 Vue.component('q-vueProfile', VueProfile);
+Vue.component('q-cart', Qcart);
 Vue.component('q-tiktoolbar', Toolbar);
 Vue.component('q-Vkontakte', VueGoodshareVkontakte)
 Vue.component('q-Odnoklassniki', VueGoodshareOdnoklassniki)
@@ -61,6 +65,7 @@ Vue.component('q-streamcard', StreamCard)
 Vue.component('q-hls', HlsPlayer)
 Vue.component('q-stream', Stream)
 Vue.component('q-player', Player)
+Vue.component('q-langSwitcher', LanguageSwitcher);
 // we globally register our component with Vue
 Vue.component('q-newmodel', QnewModel)
 Vue.component('q-newmodelv2',QnewModelv2)

@@ -3,7 +3,7 @@
  <!-- <q-input outlined v-model="number" prefix="$" label-slot clearable>
         <template v-slot:prepend>
           <q-avatar>
-            <img src="https://dev.camsguns.com/img/PCMLogo.svg">
+            <img src="https://dev.cg.house/img/PCMLogo.svg">
           </q-avatar>
         </template>
 
@@ -14,10 +14,10 @@
       </q-input> -->
 
     <div class="row w-vw-100 h-vh-10" >
-      <q-toolbar class="bg-black text-white rounded-borders">
+      <q-toolbar class="bg-black text-white ">
         <q-btn round dense flat icon="navigate_before" class="q-mr-xs" @click="goback" />
         <q-avatar >
-          <img src="https://rec.camsguns.com/logo.png">
+          <img src="https://rec.cg.house/logo.png">
         </q-avatar>
 
         <q-space />
@@ -35,7 +35,7 @@
           <q-item clickable v-ripple :to="'/'+girlVideo.link">
       <q-item-section side  :v-if="imageExists(index ,girlVideo.screen).status">
         <q-avatar rounded size="100px" >
-          <img  :v-if="!!(girlVideo.status)" :src="girlVideo.screen" />
+          <img  :v-if="!!(girlVideo.status)" :src="girlVideo.screen.replace('.camsguns.com','.cg.house')" />
           <q-badge floating color="red">live</q-badge>
         </q-avatar>
       </q-item-section>
@@ -52,7 +52,7 @@
       </q-item-section>
       <q-item-section avatar>
           <q-avatar round>
-            <img :src="girlVideo.otherData.avatars">
+            <img :src="girlVideo.otherData.avatars.replace('.camsguns.com','.cg.house')">
           </q-avatar>
         </q-item-section>
     </q-item>
@@ -94,32 +94,37 @@ export default {
     }
   },
   beforeCreate() {
-    http({
-      method: "get",
-      url: "/models_online",
-      headers: {
-        "x-access-token": LocalStorage.getItem("token")
-      }
-    }).then(response => {
-      this.girlsVideos = response.data;
-    });
-    setInterval(
-      function() {
-        http({
-          method: "get",
-          url: "/models_online",
-          headers: {
-            "x-access-token": LocalStorage.getItem("token")
-          }
-        }).then(response => {
-          if(!(this.searchQuery)){
-                this.girlsVideos = response.data;
-          }
+    // http({
+    //   method: "get",
+    //   url: "/models_online",
+    //   headers: {
+    //     "x-access-token": LocalStorage.getItem("token")
+    //   }
+    // }).then(response => {
+    //   this.girlsVideos = response.data;
+    // });
+    // setInterval(
+    //   function() {
+    //     http({
+    //       method: "get",
+    //       url: "/models_online",
+    //       headers: {
+    //         "x-access-token": LocalStorage.getItem("token")
+    //       }
+    //     }).then(response => {
+    //       if(!(this.searchQuery)){
+    //             this.girlsVideos = response.data;
+    //       }
       
-        });
-      }.bind(this),
-      5000
-    );
+    //     });
+    //   }.bind(this),
+    //   5000
+    // );
+  },
+  sockets:{
+    online:function(models){
+     this.girlsVideos = models
+    }
   },
   methods: {
     goback:function(){
@@ -143,10 +148,10 @@ let diff = unit => date.getDateDiff(date1, date2, unit)
     http.open('HEAD', url, false);
     try {
        http.send();
-       this.girlsVideos[i].screen = http.status !== 404 ? url : 'https://rec.camsguns.com/no-image.png';
+       this.girlsVideos[i].screen = http.status !== 404 ? url : 'https://rec.cg.house/no-image.png';
        this.girlsVideos[i].status = http.status !== 404;
     } catch (error) {
-       this.girlsVideos[i].screen = http.status !== 404 ? url : 'https://rec.camsguns.com/no-image.png';
+       this.girlsVideos[i].screen = http.status !== 404 ? url : 'https://rec.cg.house/no-image.png';
        this.girlsVideos[i].status = http.status !== 404;
     }
     return {status:http.status != 404, img: url};

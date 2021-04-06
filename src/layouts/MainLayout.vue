@@ -14,24 +14,24 @@
                         </q-btn>
                         <q-toolbar-title class="head flex-center-vertical">
                             <p class="h-100 w-mx text-comment-18 text-red q-ma-none h-mc ml-vw-10 oswald-semibold">
-                                АЛЬФА ВЕРСИЯ!
+                                {{$t("version")}}
                             </p>
                         </q-toolbar-title>
                     </q-toolbar>
                     <q-tabs align="right" v-model="tab" dense no-caps :indicator-color="enableindicator" :class="`head ${pcm.controls.dark? 'bg-dark text-white':'bg-white text-black'} q-mr-md col-lg-6 col-xs-6 col-md-6`">
                         <q-route-tab class="head col-3" name="home" to="/">
-                            <p class="q-pa-none q-ma-none absolute-center text-xl oswald-semibold">Главная</p>
+                            <p class="q-pa-none q-ma-none absolute-center text-xl oswald-semibold">{{$t("menu.main")}}</p>
                         </q-route-tab>
     
                         <q-route-tab class="head col-3" name="lives" to="/live" :disable="!auth">
-                            <p class="q-pa-none q-ma-none absolute-center text-xl oswald-semibold">В эфире</p>
+                            <p class="q-pa-none q-ma-none absolute-center text-xl oswald-semibold">{{$t("menu.lives")}}</p>
                         </q-route-tab>
                         <q-route-tab class="head col-3" to="/create" v-if="ismodel">
-                            <p class="q-pa-none q-ma-none absolute-center text-xl oswald-semibold">Записать видео</p>
+                            <p class="q-pa-none q-ma-none absolute-center text-xl oswald-semibold">{{$t("menu.record")}}</p>
                         </q-route-tab>
     
                         <q-route-tab class="head col-3" to="/newstream" v-if="ismodel">
-                            <p class="q-pa-none q-ma-none absolute-center text-xl oswald-semibold">Начать стрим</p>
+                            <p class="q-pa-none q-ma-none absolute-center text-xl oswald-semibold">{{$t("menu.streaming")}}</p>
                         </q-route-tab>
     
                         <!--q-route-tab class="col-2" name="categories" to="/categories"><p class="absolute-center" style="font-size:2.5vh; !imported">Категории</p></q-route-tab>-->
@@ -39,20 +39,23 @@
     
                     <div v-if="pcm.auth" class="row mr-vw-1">
                         <q-avatar class="vh5box">
-                            <img class="absolute-center b-border cursor-pointer" :src="useravatar" />
+                            <img class="absolute-center b-border cursor-pointer" :src="useravatar.replace('.camsguns.com','.cg.house')" />
                             <q-menu fit transition-show="jump-down" transition-hide="jump-up" no-refocus content-class="r-border">
                                 <div :class="`row  no-wrap q-pa-md ${pcm.controls.dark ? 'bg-dark text-white' : ''} `">
                                     <div class="col-8">
                                         <div class="text-h6 q-mb-md text-weight-light text-center oswald-semibold">
-                                            настройки
+                                            {{$t('setting')}}
                                         </div>
-                                        <q-toggle v-model="theme" checked-icon="nights_stay" color="pink" unchecked-icon="wb_sunny" class="oswald-bold" label="Ночной" />
-                                        <q-toggle v-model="muteall" checked-icon="volume_off" color="pink" class="oswald-bold" unchecked-icon="volume_up" label="Беззвучный" />
+                                        <q-toggle v-model="theme" checked-icon="nights_stay" color="pink" unchecked-icon="wb_sunny" class="oswald-bold" :label="$t('mode')" />
+                                        <q-toggle v-model="muteall" checked-icon="volume_off" color="pink" class="oswald-bold" unchecked-icon="volume_up" :label="$t('mute_all')" />
+                                        <!-- <q-toggle v-model="language" checked-icon="img:https://rec.cg.house/statics/america.svg" icon-color="white" color="white" class="oswald-bold language_toggle" unchecked-icon="img:https://rec.cg.house/statics/russia.svg" :label="pcm.controls.language === 'ru'? 'язык': 'language' " /> -->
+                                        <q-langSwitcher/>
+                                        <q-installer />
                                     </div>
                                     <!-- <q-separator vertical inset class="q-mx-lg bg-grey-4"/> -->
                                     <div class="col-3 items-center">
                                         <q-avatar class="cursor-pointer" size="70px" @click="$router.push('/profile')">
-                                            <img :src="useravatar" />
+                                            <img :src="useravatar.replace('.camsguns.com','.cg.house')" />
                                         </q-avatar>
     
                                         <div class="text-subtitle1 q-mt-md q-mb-xs text-weight-light oswald-regular">
@@ -238,7 +241,7 @@
                 </q-form>
             </q-card>
         </q-dialog>
-        <q-page-container class="q-pa-none" style="padding-top: 0px">
+        <q-page-container class="q-pa-none fit absolute" style="padding-top: 0px">
             <router-view></router-view>
         </q-page-container>
     </q-layout>
@@ -286,6 +289,7 @@ export default {
             passAgain: new String(""),
             validateAuth: false,
             okay: false,
+            language: false,
             validateReg: false,
             validateReset: false,
             resetPass: false,
@@ -306,6 +310,9 @@ export default {
         }
     },
     watch: {
+        language: function(val) {
+            this.$store.dispatch("pcm/switch_language", { lang: val ? 'en' : 'ru' })
+        },
         muteall: function(val) {
             this.$store.dispatch("pcm/muteall", { status: val });
         },
@@ -416,6 +423,13 @@ export default {
 
     },
     mounted() {
+        let vm = this;
+        initializerFirebase().then(() =>
+            askForPermissioToReceiveNotifications(
+                vm.pcm.user.id,
+                Platform.is
+            ).then(() => console.log("permession requested"))
+        );
         this.registerSocketId()
         let vh = window.innerHeight * 0.01;
         this.$socket.emit("checkAuth", { id: this.pcm.user.id });
@@ -468,8 +482,8 @@ export default {
         }
     },
     methods: {
-        registerSocketId:function(){
-  this.$socket.emit("register_socket_id", {username: this.pcm.user.un, connected: this.pcm.auth, userid: this.pcm.user.id})
+        registerSocketId: function() {
+            this.$socket.emit("register_socket_id", { username: this.pcm.user.un, connected: this.pcm.auth, userid: this.pcm.user.id })
         },
         refresh(done) {
 
@@ -504,15 +518,13 @@ export default {
         },
         virification() {
             console.log("sending ....");
-            var data = !!this.pcm.user.id ?
-                {
-                    userstate: this.auth,
-                    id: this.pcm.user.id,
-                    token: this.pcm.user.tk,
-                } :
-                {
-                    userstate: !!this.pcm.user.id,
-                };
+            var data = !!this.pcm.user.id ? {
+                userstate: this.auth,
+                id: this.pcm.user.id,
+                token: this.pcm.user.tk,
+            } : {
+                userstate: !!this.pcm.user.id,
+            };
             this.$socket.emit("getverificationurl", data);
         },
         validateNewPassE() {
@@ -628,12 +640,7 @@ export default {
                     delete this.password;
                     delete this.passAgain;
                     this.LogInSession();
-                    initializerFirebase().then(() =>
-                        askForPermissioToReceiveNotifications(
-                            response.data.userId,
-                            Platform.is
-                        ).then(() => console.log("permession requested"))
-                    );
+
                 } else {
                     this.$q.notify({
                         color: "negative",
@@ -691,3 +698,11 @@ export default {
     },
 };
 </script>
+
+<style lang="scss">
+.language_toggle {
+    .q-toggle__label {
+        width: 50px;
+    }
+}
+</style>
