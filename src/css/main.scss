@@ -128,9 +128,28 @@
   .oswald-light {
     font-family: 'Oswald-light';
   }
+ 
   @font-face {
-    font-family: Oswald-semibold;
-    src: url(../fonts/Oswald/static/Oswald-SemiBold.ttf);
+    font-family: Sarpanch-bold;
+    src: url(../fonts/Sarpanch/Sarpanch-Bold.ttf);
+  }
+  
+  // declare a class which applies it
+  .oswald-bold {
+    font-family: 'Sarpanch-semibold';
+  }
+  @font-face {
+    font-family: Sarpanch-semibold;
+    src: url(../fonts/Sarpanch/Sarpanch-SemiBold.ttf);
+  }
+  
+  // declare a class which applies it
+  .oswald-light {
+    font-family: 'Sarpanch-Regular';
+  }
+  @font-face {
+    font-family: Sarpanch-Regular;
+    src: url(../fonts/Sarpanch/Sarpanch-Regular.ttf);
   }
   
   // declare a class which applies it
@@ -385,13 +404,18 @@ width: 100%;
     }
     .mobile-ui-profile-img{
         height: 24vh;
-        border-radius: 11px 35px 9px 34px;
-        background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        border-radius: 0px 0px 34px 34px;
+        background-image: linear-gradient(135deg, $ThemeColor 0%, #bb1307 100%);
         box-shadow: none;
-        
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        position: initial;
+        margin-bottom: 100px;
         .q-py-none{
             padding: unset !important;
-            background: rgb(0 0 0 / 11%) !important;
+            background: unset !important;
         }
     }
     .profilevideo{
@@ -440,18 +464,33 @@ width: 100%;
     }
 }
     .profile-swiper{
-        border-radius: 20px;
+        background: unset;
+    // border-radius: 20px;
+    padding: 10px 5px;
+    margin: 15px 1px;
 
-    margin: 0px 12px;
-    //box-shadow: 0px 5px 1px black;
+    .swiper-slide{
+        background: unset;
+        max-width: 300px;
+        // position: absolute;
+      
+    }
+    .q-img{
+        border-radius: 20px !important;
+        box-shadow: 0px 2px 5px 1px #444;
+    }
     .plyr--video{
         height: 100%;
+        width: 300px;
+        background: unset;
+        border-radius: 20px !important;
+        box-shadow: 0px 2px 5px 1px #444;
     }
     }
     .mobile-ui-profile-infos{
-        border-radius: 22px;
+        // border-radius: 22px;
         font-family: 'Oswald-regular';
-        background-image: linear-gradient(135deg, #f5f7fa 0%, #f6e2ff 100%);
+        // background-image: linear-gradient(135deg, #f5f7fa 0%, #f6e2ff 100%);
         box-shadow: none;
         
         .q-py-none{
@@ -897,6 +936,10 @@ border: 1px solid #ccc;
 .mutebtnfirefox{
     margin-top:-15%;
     margin-right:10%;
+}
+.fine_border{
+    border: 1px solid rgb(51, 51, 51);
+    box-shadow: inset 0 0 1px rgb(51, 51, 51);
 }
 .banner-no-streams{
     align-self: center;

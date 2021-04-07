@@ -25,6 +25,10 @@ export default {
         users:"Users",
         settings:"Settings"
        },
+       mobile:{
+        no_tag:"#no_tags"
+      },
+      more:"more",
        record:{
         upload_video:"Upload video",
         video_name:"Video name...",

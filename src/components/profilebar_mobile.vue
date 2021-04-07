@@ -1,12 +1,12 @@
 <template>
    <div class="q-pa-md q-gutter-xs" v-if="data.subs !== null">
-    <q-badge :color="color ? color : 'pink-4'" class="q-py-xs text-body2 q-b-rouded text-weight-regular text-lowercase cursor-pointer" outline  @click="opensubs" >
+    <q-badge :color="color ? color : 'pink-4'" class="q-py-xs text-body2 q-b-rouded text-weight-regular text-uppercase cursor-pointer" outline  @click="opensubs" >
       {{data.subs ? data.subs.length :0}} Подписки
     </q-badge>
-    <q-badge :color="color ? color : 'pink-4'" class="q-py-xs text-body2 q-b-rouded text-weight-regular text-lowercase" outline>
+    <q-badge :color="color ? color : 'pink-4'" class="q-py-xs text-body2 q-b-rouded text-weight-regular text-uppercase" outline>
       {{data.likes}} Лайки
     </q-badge>
-    <q-badge :color="color ? color : 'pink-4'" class="q-py-xs text-body2 q-b-rouded text-weight-regular text-lowercase" outline v-if="usermodel & notpravite"  >
+    <q-badge :color="color ? color : 'pink-4'" class="q-py-xs text-body2 q-b-rouded text-weight-regular text-uppercase" outline v-if="usermodel & notpravite"  >
       {{data.subings ? data.subings.length : 0}} Подписчики
     </q-badge>
     <q-dialog v-model="dlistsubs" position="bottom" >

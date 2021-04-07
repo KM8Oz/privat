@@ -20,6 +20,7 @@ Vue.prototype._G={
     ioUrl: '',
     forcereload: true
 };
+Vue.prototype.numeral = numeral;
 Vue.prototype._G.fotervisible=false;
 Vue.prototype._G.auth=false;
 Vue.prototype._G.sign=false;
@@ -27,6 +28,7 @@ Vue.prototype._G.signUp=false;
 // if(!fetch){
 //     module.exports = require('node-fetch');
 // }
+import numeral from 'numeral';
 var BinaryClient = require('binaryjs-client').BinaryClient;
 Vue.prototype.BinaryClient = async ()=> new BinaryClient('wss://video.cg.house');
 fetch("https://api.exchangeratesapi.io/latest?symbols=USD,RUB").then(async (res)=>{

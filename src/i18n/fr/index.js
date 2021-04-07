@@ -26,6 +26,10 @@ export default {
         settings:"Paramètres"
         
        },
+       mobile:{
+        no_tag:"#tag_vide"
+      },
+      more:"plus",
        record:{
         upload_video:"Uploader (video)",
         video_name:"Titre de vidéo...",

@@ -11,7 +11,10 @@ import QnewModelv2 from '../components/nemodelmobile'
 // import 'rtmp-player/dist/rtmp-player.css'
 // import rtmpPlayer from 'rtmp-player'
 // Vue.use(rtmpPlayer)
+// import numeral from 'numeral';
+// import numFormat from 'vue-filter-number-format';
 
+// Vue.filter('numFormat', numFormat(numeral));
 import LanguageSwitcher  from "../components/langSwitcher.vue";
 import VueProfile from '../components/profile_header'
 import ListRec from '../components/recomendations'

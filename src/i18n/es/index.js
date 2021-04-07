@@ -23,6 +23,7 @@ export default {
         users:"Пользователи",
         settings:"Настройки"
        },
+       more:"больше",
        record:{
         upload_video:"Загрузить видео",
         video_name:"название видео...",

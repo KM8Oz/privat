@@ -35,7 +35,7 @@
       >
         <div class="absolute-center full-width zi200 vh100">
    
-    <q-player :muted="muteall" :src="videosrc(girlVideo.data[0].video)[0]"  :poster="girlVideo.data[0].video.replace('.mp4','_mobile.png')"/>
+    <q-player :muted="muteall" :src="videosrc(girlVideo.data[0].video)[0]"  :poster="girlVideo.data[0].video.replace('.camsguns.com','.cg.house').replace('.mp4','_mobile.png')"/>
  
         </div>
         <div class="row zi200 clickevnt mobileheadctl align-center text-pink-dg">
@@ -55,7 +55,7 @@
 
             <q-item-section class="q-mx-auto">
               <q-item-label class="q-pa-none p-mb-md text-body2">{{
-                girlVideo.data[0].tags ? girlVideo.data[0].tags[0] : "#нет_хэштегов"
+                girlVideo.data[0].tags ? girlVideo.data[0].tags[0] : $t('mobile.no_tag')
               }}</q-item-label>
               <q-item-label caption lines="2" class="text-white text-overline">
                 <span class="text-subtitle1 text-uppercase text-weight-light text-white text-caption"
@@ -125,7 +125,7 @@
       >
         <div class="absolute-center full-width zi200 vh100">
    
-             <q-player :muted="muteall" :src="videosrc(girlVideo.data[0].video)[0]"  :poster="girlVideo.data[0].video.replace('.mp4','_mobile.png')"/>
+             <q-player :muted="muteall" :src="videosrc(girlVideo.data[0].video)[0]"  :poster="girlVideo.data[0].video.replace('.camsguns.com','.cg.house').replace('.mp4','_mobile.png')"/>
 
 
         </div>
@@ -217,7 +217,7 @@
       >
         <div class="absolute-center full-width zi200 vh100">
 
-             <q-player :muted="muteall" :src="videosrc(girlVideo.data[0].video)[0]"  :poster="girlVideo.data[0].video.replace('.mp4','_mobile.png')"/>
+             <q-player :muted="muteall" :src="videosrc(girlVideo.data[0].video)[0]"  :poster="girlVideo.data[0].video.replace('.camsguns.com','.cg.house').replace('.mp4','_mobile.png')"/>
 
         </div>
         <div class="row zi200 clickevnt mobileheadctl align-left text-pink-dg">

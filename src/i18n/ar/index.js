@@ -25,6 +25,10 @@ export default {
         users:"المستعملين",
         settings:"إعدادات"
        },
+       mobile:{
+        no_tag:"#غيرمصنف"
+      },
+      more:"المزيد",
        record:{
         upload_video:"تحميل المقطع",
         video_name:"عنوان المقطع...",

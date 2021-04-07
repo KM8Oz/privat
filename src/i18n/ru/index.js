@@ -21,12 +21,18 @@ export default {
         subscribe:"Подписаться",
         unsubscribe:"Отписаться"
     },
+    more:"больше",
     lives:{
      banner:"некого в эфире",
      chat:"Чат",
      bots:"бот",
      users:"Пользователи",
      settings:"Настройки"
+    },
+    mobile:{
+      no_tag:"#нет_хэштегов",
+      list_videos:"список видео",
+      list_photos:"галерея"
     },
     record:{
         upload_video:"Загрузить видео",
