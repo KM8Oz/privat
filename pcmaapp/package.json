@@ -69,7 +69,7 @@
     "eslint-plugin-promise": "^4.0.1",
     "eslint-plugin-standard": "^4.0.0",
     "eslint-plugin-vue": "^6.1.2",
-    "grunt": "^1.2.1",
+    "grunt": "^1.5.3",
     "kurento-client": "^6.13.0",
     "video.js": "^7.8.4"
   },
