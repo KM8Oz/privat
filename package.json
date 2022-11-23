@@ -45,7 +45,7 @@
     "quasar": "^1.15.1",
     "quasar-extras": "^2.0.9",
     "recordrtc": "^5.6.1",
-    "socket.io": "^2.3.0",
+    "socket.io": "^2.5.0",
     "socketio-file-upload": "^0.7.2",
     "streamedian": "git://github.com/Streamedian/html5_rtsp_player.git",
     "string-similarity": "^4.0.3",
