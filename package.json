@@ -30,7 +30,7 @@
     "check-links": "^1.1.8",
     "core-js": "^3.8.3",
     "firebase": "^7.19.0",
-    "fluid-player": "^3.0.4",
+    "fluid-player": "^3.18.0",
     "get-user-media-promise": "^1.1.4",
     "gifit": "0.0.3",
     "grunt-contrib-connect": "^3.0.0",
